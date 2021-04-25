@@ -1,0 +1,12 @@
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\ImageResizer.Form_About.resources
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\ImageResizer.Form_Main.resources
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\ImageResizer.Properties.Resources.resources
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\Image Resizer.csproj.GenerateResource.Cache
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\bin\Release\ImageResizer.exe
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\bin\Release\ImageResizer.pdb
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\bin\Release\ImageProcessor.dll
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\ImageResizer.exe
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\ImageResizer.pdb
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\Image Resizer.csprojResolveAssemblyReference.cache
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\obj\x86\Release\ImageResizer.Form_Resize.resources
+C:\Users\Abdelhakim\Desktop\Image Resizer\Image Resizer\bin\Release\ImageResizer.exe.config
