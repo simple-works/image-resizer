@@ -68,6 +68,7 @@
             this.checkBox_keepAspectRatio.TabIndex = 2;
             this.checkBox_keepAspectRatio.Text = "Keep Aspect Ratio";
             this.checkBox_keepAspectRatio.UseVisualStyleBackColor = true;
+            this.checkBox_keepAspectRatio.CheckedChanged += new System.EventHandler(this.checkBox_keepAspectRatio_CheckedChanged);
             // 
             // groupBox_percentage
             // 
@@ -210,7 +211,6 @@
             this.numUD_height.Size = new System.Drawing.Size(120, 20);
             this.numUD_height.TabIndex = 3;
             this.numUD_height.ValueChanged += new System.EventHandler(this.numUD_height_ValueChanged);
-            this.numUD_height.Click += new System.EventHandler(this.numUD_height_Click);
             // 
             // numUD_width
             // 
@@ -224,7 +224,6 @@
             this.numUD_width.Size = new System.Drawing.Size(120, 20);
             this.numUD_width.TabIndex = 1;
             this.numUD_width.ValueChanged += new System.EventHandler(this.numUD_width_ValueChanged);
-            this.numUD_width.Click += new System.EventHandler(this.numUD_width_Click);
             // 
             // button_selectOutputFolder
             // 

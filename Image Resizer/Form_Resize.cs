@@ -138,7 +138,6 @@ namespace ImageResizer
         {
             numUD_width_ValueChanged(null, null);
             numUD_widthPc_ValueChanged(null, null);
-            numUD_width_Click(null, null);
         }
 
         private void button_selectOutputFolder_Click(object sender, EventArgs e)
@@ -178,24 +177,6 @@ namespace ImageResizer
             }
         }
 
-        private void numUD_width_Click(object sender, EventArgs e)
-        {
-            if (checkBox_keepAspectRatio.Checked)
-            {
-                numUD_width.ReadOnly = false;
-                numUD_height.ReadOnly = true;
-            }
-        }
-
-        private void numUD_height_Click(object sender, EventArgs e)
-        {
-            if (checkBox_keepAspectRatio.Checked)
-            {
-                numUD_width.ReadOnly = true;
-                numUD_height.ReadOnly = false;
-            }
-        }
-
         private void Form_Resize_FormClosing(object sender, FormClosingEventArgs e)
         {
             Settings.Default.ResizeUnitIsFlat = radioButton_flat.Checked;
@@ -207,5 +188,7 @@ namespace ImageResizer
             Settings.Default.OutputFolderPath = textBox_outputFolderPath.Text.Trim();
             Settings.Default.Save();
         }
+
+        
     }
 }

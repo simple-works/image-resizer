@@ -33,7 +33,7 @@ namespace ImageResizer
                 string filename = Path.GetFileName(path);
                 string size = path.ToFileSizeFormat();
                 Image image = Image.FromFile(path);
-                string dimensions = image.ToDimensionsString();
+                string dimensions = image.GetDimensionsString();
 
                 image.Tag = filename;
                 this.Images.Add(image);
@@ -47,6 +47,7 @@ namespace ImageResizer
                     item.ToolTipText = filename;
                     item.SubItems.AddRange(new[] { dimensions, size });
                     listView_main.Items.Add(item);
+
                     imageList_main.Images.Add(item.ImageKey, image);
                     imageList_backup.Images.Add(item.ImageKey, image);
                 }
@@ -128,12 +129,12 @@ namespace ImageResizer
 
         private void button_resize_Click(object sender, EventArgs e)
         {
-            if (listView_main.Items.Count == 0)
-            {
-                MessageBox.Show("No images", "Alert",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
+            //if (listView_main.Items.Count == 0)
+            //{
+            //    MessageBox.Show("No images", "Alert",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //else
             {
                 new Form_Resize(this.Images.ToArray()).ShowDialog();
             }

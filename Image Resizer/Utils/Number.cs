@@ -16,7 +16,6 @@ namespace ImageResizer
             double num = Math.Round(bytes / Math.Pow(1024, place), 1);
             return (Math.Sign(byteCount) * num).ToString() + " " + suffixes[place];
         }
-        
         public static string ToFileSizeFormat(this string path)
         {
             return ToFileSizeFormat(new FileInfo(path).Length);
@@ -24,12 +23,12 @@ namespace ImageResizer
 
         public static int ToFlat(this int percentage, int total)
         {
-            return total * (percentage / 100);
+            return (int)(total * (percentage / 100.0));
         }
 
         public static int ToPercentage(this int flat, int total)
         {
-            return flat * (100 / total);
+            return (int)(flat * (100.0 / total));
         }
     }
 }
