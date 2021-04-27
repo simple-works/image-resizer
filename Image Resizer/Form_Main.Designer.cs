@@ -124,6 +124,7 @@
             // 
             // Form_Main
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 362);
@@ -139,6 +140,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image Resize";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Main_FormClosing);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form_Main_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form_Main_DragEnter);
             this.ResumeLayout(false);
 
         }

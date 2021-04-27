@@ -26,6 +26,34 @@ namespace ImageResizer
             comboBox_view.SelectedValue = (Utils.ViewX)Settings.Default.View;
         }
 
+        private void LoadImages(params string[] paths)
+        {
+            foreach (string path in paths)
+            {
+                string filename = Path.GetFileName(path);
+                string size = path.ToFileSizeFormat();
+                Image image = Image.FromFile(path);
+                string dimensions = image.ToDimensionsString();
+
+                image.Tag = filename;
+                this.Images.Add(image);
+
+                if (!listView_main.Items.ContainsKey(path))
+                {
+                    var item = new ListViewItem();
+                    item.Name = path;
+                    item.ImageKey = path;
+                    item.Text = filename;
+                    item.ToolTipText = filename;
+                    item.SubItems.AddRange(new[] { dimensions, size });
+                    listView_main.Items.Add(item);
+                    imageList_main.Images.Add(item.ImageKey, image);
+                    imageList_backup.Images.Add(item.ImageKey, image);
+                }
+            }
+            imageList_backup.ImageSize = new Size(256, 256);
+        }
+
         private void Initialize_comboBox_view()
         {
             comboBox_view.DataSource = Utils.ViewTypes;
@@ -61,30 +89,7 @@ namespace ImageResizer
             openFileDialog.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.bmp";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (string path in openFileDialog.FileNames)
-                {
-                    string filename = Path.GetFileName(path);
-                    string size = path.ToFileSizeFormat();
-                    Image image = Image.FromFile(path);
-                    string dimensions = image.ToDimensionsString();
-
-                    image.Tag = filename;
-                    this.Images.Add(image);
-
-                    if (!listView_main.Items.ContainsKey(path))
-                    {
-                        var item = new ListViewItem();
-                        item.Name = path;
-                        item.ImageKey = path;
-                        item.Text = filename;
-                        item.ToolTipText = filename;
-                        item.SubItems.AddRange(new[] { dimensions, size });
-                        listView_main.Items.Add(item);
-                        imageList_main.Images.Add(item.ImageKey, image);
-                        imageList_backup.Images.Add(item.ImageKey, image);
-                    }
-                }
-                imageList_backup.ImageSize = new Size(256, 256);
+                LoadImages(openFileDialog.FileNames);
             }
         }
 
@@ -146,6 +151,24 @@ namespace ImageResizer
         {
             Settings.Default.View = (int)comboBox_view.SelectedValue;
             Settings.Default.Save();
+        }
+
+        private void Form_Main_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void Form_Main_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            LoadImages(paths);
         }
     }
 }
