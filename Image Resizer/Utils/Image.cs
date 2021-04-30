@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using ImageProcessor;
-using System.Drawing;
 using ImageProcessor.Imaging;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ImageResizer
 {
     public static partial class Utils
     {
-        public enum ResizeUnit { Flat = 0, Percentage = 1 }
+        public enum ResizeUnit { Flat, Percentage }
 
-        public static Image Resize(this Image image, Size size)
+        public static Image Resize(this Image image, Size size,
+            ResizeMode resizeMode = ResizeMode.Stretch)
         {
             ImageFactory imageFactory = new ImageFactory();
             imageFactory.Load(image);
-            ResizeLayer config = new ResizeLayer(size, ResizeMode.Stretch);
+            ResizeLayer config = new ResizeLayer(size, resizeMode);
             return imageFactory.Resize(config).Image;
         }
-
         public static Image Resize(this Image image, int width = 0, int height = 0,
             ResizeUnit unit = ResizeUnit.Flat)
         {
@@ -34,16 +33,33 @@ namespace ImageResizer
             }
         }
 
+        public static string GetOutputFileName(this Image image)
+        {
+            string path = (string)image.Tag;
+            if (String.IsNullOrEmpty(path.Trim()))
+            {
+                path = "untitled";
+            }
+            string baseFileName = Path.GetFileNameWithoutExtension(path);
+            string extension = Path.GetExtension(path);
+            return String.Format("{0}_{1}x{2}.{3}",
+                baseFileName, image.Width, image.Height, extension);
+        }
+
         public static double GetAspectRatio(this Image image)
         {
-            return image.Width / image.Height;
+            return image.Width / (double)image.Height;
         }
         public static double GetAspectRatio(this Size size)
         {
-            return size.Width / size.Height;
+            return size.Width / (double)size.Height;
+        }
+        public static double GetAspectRatio(int width, int height)
+        {
+            return width / (double)height;
         }
 
-        public static Size ToProportionalSize(this Size size, int width = 0, int height = 0)
+        public static Size ToSize(this Size size, int width = 0, int height = 0)
         {
             if (width != 0 && height != 0)
             {
@@ -51,19 +67,37 @@ namespace ImageResizer
             }
             if (width == 0 && height != 0)
             {
-                return new Size(height * (int)size.GetAspectRatio(), height);
+                return new Size(Convert.ToInt32(height * size.GetAspectRatio()), height);
             }
             if (width != 0 && height == 0)
             {
-                return new Size(width, width / (int)size.GetAspectRatio());
+                return new Size(width, Convert.ToInt32(width / size.GetAspectRatio()));
             }
             return size;
         }
 
-        public static string GetDimensionsString(this Image image, bool spaced = true)
+        public static string ToSizeString(this Size size, bool spaced = true)
         {
-            string divider = spaced ? " x " : "x";
-            return (image.Width + divider + image.Height).ToString();
+            return (size.Width + (spaced ? " x " : "x") + size.Height).ToString();
+        }
+
+        public static string GetSizeString(this Image image, bool spaced = true)
+        {
+            return image.Size.ToSizeString(spaced);
+        }
+
+        public static Image FindByTag<T>(this List<Image> images, T tag)
+        {
+            return images.Find(image => image.Tag.Equals(tag));
+        }
+
+        public static void RemoveByTag<T>(this List<Image> images, T tag)
+        {
+            Image imageToRemove = images.FindByTag<T>(tag);
+            if (imageToRemove != null)
+            {
+                images.Remove(imageToRemove);
+            }
         }
     }
 }

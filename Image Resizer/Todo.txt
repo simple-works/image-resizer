@@ -1,0 +1,17 @@
+﻿==================================================
+♦ Fixes and Improvements:
+==================================================
+• Forms: refactor event-handling methods
+• Image: clarify image saving format & quality 
+• Drag-Drop: prevent droping of wrong files & folders 
+• Numbers: correct number-variables types & prevent per-zero divisons
+• Try-Catch: wrap operations related to files, images, & numbers 
+
+==================================================
+♦ New-Features:
+==================================================
+• Asynchronous image loading, resizing, & saving
+• Better image-viewer that also shows animated gifs
+• Better UI for flat-resizing with keep-aspect-ratio option
+• Better About-dialog with third-party credits
+• Windows Installer

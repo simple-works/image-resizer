@@ -71,8 +71,19 @@
     <Compile Include="Form_Main.Designer.cs">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_View.Designer.cs">
+      <DependentUpon>Form_View.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\UISettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>UISettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Image.cs" />
-    <Compile Include="Utils\ListView.cs" />
+    <Compile Include="Utils\Control.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Number.cs" />
@@ -84,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_View.resx">
+      <DependentUpon>Form_View.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -106,9 +120,27 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Properties\UISettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>UISettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\logo.bmp" />
+    <None Include="Resources\background.jpg" />
+    <None Include="Resources\image.png" />
+    <Content Include="Todo.txt" />
+    <None Include="Resources\cross.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\cancel.png" />
+    <None Include="Resources\accept_button.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\resize_picture.png" />
+    <None Include="Resources\eye.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

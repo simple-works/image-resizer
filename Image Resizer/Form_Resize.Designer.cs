@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.checkBox_keepAspectRatio = new System.Windows.Forms.CheckBox();
             this.groupBox_percentage = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,12 +44,15 @@
             this.label_height = new System.Windows.Forms.Label();
             this.numUD_height = new System.Windows.Forms.NumericUpDown();
             this.numUD_width = new System.Windows.Forms.NumericUpDown();
-            this.button_selectOutputFolder = new System.Windows.Forms.Button();
             this.textBox_outputFolderPath = new System.Windows.Forms.TextBox();
             this.label_outputFolder = new System.Windows.Forms.Label();
-            this.button_start = new System.Windows.Forms.Button();
             this.radioButton_flat = new System.Windows.Forms.RadioButton();
             this.radioButton_percentage = new System.Windows.Forms.RadioButton();
+            this.button_start = new System.Windows.Forms.Button();
+            this.button_cancel = new System.Windows.Forms.Button();
+            this.button_selectOutputFolder = new System.Windows.Forms.Button();
+            this.toolTip_main = new System.Windows.Forms.ToolTip(this.components);
+            this.folderBrowserDialog_main = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox_percentage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUD_heightPc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUD_widthPc)).BeginInit();
@@ -62,11 +66,12 @@
             this.checkBox_keepAspectRatio.AutoSize = true;
             this.checkBox_keepAspectRatio.Checked = true;
             this.checkBox_keepAspectRatio.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_keepAspectRatio.Location = new System.Drawing.Point(13, 140);
+            this.checkBox_keepAspectRatio.Location = new System.Drawing.Point(15, 139);
             this.checkBox_keepAspectRatio.Name = "checkBox_keepAspectRatio";
             this.checkBox_keepAspectRatio.Size = new System.Drawing.Size(114, 17);
             this.checkBox_keepAspectRatio.TabIndex = 2;
             this.checkBox_keepAspectRatio.Text = "Keep Aspect Ratio";
+            this.toolTip_main.SetToolTip(this.checkBox_keepAspectRatio, "Keep the same width-height proportions");
             this.checkBox_keepAspectRatio.UseVisualStyleBackColor = true;
             this.checkBox_keepAspectRatio.CheckedChanged += new System.EventHandler(this.checkBox_keepAspectRatio_CheckedChanged);
             // 
@@ -79,7 +84,7 @@
             this.groupBox_percentage.Controls.Add(this.numUD_heightPc);
             this.groupBox_percentage.Controls.Add(this.numUD_widthPc);
             this.groupBox_percentage.Enabled = false;
-            this.groupBox_percentage.Location = new System.Drawing.Point(246, 45);
+            this.groupBox_percentage.Location = new System.Drawing.Point(248, 44);
             this.groupBox_percentage.Name = "groupBox_percentage";
             this.groupBox_percentage.Size = new System.Drawing.Size(226, 89);
             this.groupBox_percentage.TabIndex = 1;
@@ -89,7 +94,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(197, 54);
+            this.label4.Location = new System.Drawing.Point(190, 54);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(18, 13);
             this.label4.TabIndex = 17;
@@ -98,7 +103,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(197, 23);
+            this.label3.Location = new System.Drawing.Point(190, 23);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(18, 13);
             this.label3.TabIndex = 16;
@@ -107,7 +112,7 @@
             // label_widthPc
             // 
             this.label_widthPc.AutoSize = true;
-            this.label_widthPc.Location = new System.Drawing.Point(26, 23);
+            this.label_widthPc.Location = new System.Drawing.Point(19, 23);
             this.label_widthPc.Name = "label_widthPc";
             this.label_widthPc.Size = new System.Drawing.Size(39, 13);
             this.label_widthPc.TabIndex = 0;
@@ -116,7 +121,7 @@
             // label_heightPc
             // 
             this.label_heightPc.AutoSize = true;
-            this.label_heightPc.Location = new System.Drawing.Point(26, 54);
+            this.label_heightPc.Location = new System.Drawing.Point(19, 54);
             this.label_heightPc.Name = "label_heightPc";
             this.label_heightPc.Size = new System.Drawing.Size(42, 13);
             this.label_heightPc.TabIndex = 2;
@@ -124,7 +129,7 @@
             // 
             // numUD_heightPc
             // 
-            this.numUD_heightPc.Location = new System.Drawing.Point(71, 50);
+            this.numUD_heightPc.Location = new System.Drawing.Point(67, 50);
             this.numUD_heightPc.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -137,7 +142,7 @@
             // 
             // numUD_widthPc
             // 
-            this.numUD_widthPc.Location = new System.Drawing.Point(71, 19);
+            this.numUD_widthPc.Location = new System.Drawing.Point(64, 19);
             this.numUD_widthPc.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -156,7 +161,7 @@
             this.groupBox_flat.Controls.Add(this.label_height);
             this.groupBox_flat.Controls.Add(this.numUD_height);
             this.groupBox_flat.Controls.Add(this.numUD_width);
-            this.groupBox_flat.Location = new System.Drawing.Point(13, 45);
+            this.groupBox_flat.Location = new System.Drawing.Point(15, 44);
             this.groupBox_flat.Name = "groupBox_flat";
             this.groupBox_flat.Size = new System.Drawing.Size(226, 89);
             this.groupBox_flat.TabIndex = 0;
@@ -175,7 +180,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(179, 23);
+            this.label5.Location = new System.Drawing.Point(182, 23);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 12;
@@ -225,74 +230,103 @@
             this.numUD_width.TabIndex = 1;
             this.numUD_width.ValueChanged += new System.EventHandler(this.numUD_width_ValueChanged);
             // 
-            // button_selectOutputFolder
-            // 
-            this.button_selectOutputFolder.Location = new System.Drawing.Point(377, 191);
-            this.button_selectOutputFolder.Name = "button_selectOutputFolder";
-            this.button_selectOutputFolder.Size = new System.Drawing.Size(95, 23);
-            this.button_selectOutputFolder.TabIndex = 5;
-            this.button_selectOutputFolder.Text = "Select Folder";
-            this.button_selectOutputFolder.UseVisualStyleBackColor = true;
-            this.button_selectOutputFolder.Click += new System.EventHandler(this.button_selectOutputFolder_Click);
-            // 
             // textBox_outputFolderPath
             // 
-            this.textBox_outputFolderPath.Location = new System.Drawing.Point(13, 192);
+            this.textBox_outputFolderPath.Location = new System.Drawing.Point(15, 191);
             this.textBox_outputFolderPath.Name = "textBox_outputFolderPath";
             this.textBox_outputFolderPath.ReadOnly = true;
-            this.textBox_outputFolderPath.Size = new System.Drawing.Size(358, 20);
+            this.textBox_outputFolderPath.Size = new System.Drawing.Size(355, 20);
             this.textBox_outputFolderPath.TabIndex = 4;
+            this.toolTip_main.SetToolTip(this.textBox_outputFolderPath, "Path of the output folder");
             this.textBox_outputFolderPath.TextChanged += new System.EventHandler(this.textBox_outputFolderPath_TextChanged);
             // 
             // label_outputFolder
             // 
             this.label_outputFolder.AutoSize = true;
-            this.label_outputFolder.Location = new System.Drawing.Point(13, 175);
+            this.label_outputFolder.Location = new System.Drawing.Point(15, 174);
             this.label_outputFolder.Name = "label_outputFolder";
             this.label_outputFolder.Size = new System.Drawing.Size(78, 13);
             this.label_outputFolder.TabIndex = 3;
             this.label_outputFolder.Text = "Output Folder:";
             // 
-            // button_start
-            // 
-            this.button_start.Location = new System.Drawing.Point(400, 235);
-            this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(75, 23);
-            this.button_start.TabIndex = 6;
-            this.button_start.Text = "Start";
-            this.button_start.UseVisualStyleBackColor = true;
-            this.button_start.Click += new System.EventHandler(this.button_start_Click);
-            // 
             // radioButton_flat
             // 
             this.radioButton_flat.AutoSize = true;
             this.radioButton_flat.Checked = true;
-            this.radioButton_flat.Location = new System.Drawing.Point(16, 13);
+            this.radioButton_flat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.radioButton_flat.Location = new System.Drawing.Point(18, 12);
             this.radioButton_flat.Name = "radioButton_flat";
             this.radioButton_flat.Size = new System.Drawing.Size(85, 17);
             this.radioButton_flat.TabIndex = 7;
             this.radioButton_flat.TabStop = true;
             this.radioButton_flat.Text = "Flat Resizing";
+            this.radioButton_flat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip_main.SetToolTip(this.radioButton_flat, "Resize images by giving fixed values for width and height");
             this.radioButton_flat.UseVisualStyleBackColor = true;
             this.radioButton_flat.CheckedChanged += new System.EventHandler(this.radioButton_flat_CheckedChanged);
             // 
             // radioButton_percentage
             // 
             this.radioButton_percentage.AutoSize = true;
-            this.radioButton_percentage.Location = new System.Drawing.Point(246, 13);
+            this.radioButton_percentage.Location = new System.Drawing.Point(248, 12);
             this.radioButton_percentage.Name = "radioButton_percentage";
             this.radioButton_percentage.Size = new System.Drawing.Size(122, 17);
             this.radioButton_percentage.TabIndex = 7;
             this.radioButton_percentage.TabStop = true;
             this.radioButton_percentage.Text = "Percentage Resizing";
+            this.toolTip_main.SetToolTip(this.radioButton_percentage, "Resize images by giving percentage values relative to the original width and heig" +
+        "ht\r\n");
             this.radioButton_percentage.UseVisualStyleBackColor = true;
             this.radioButton_percentage.CheckedChanged += new System.EventHandler(this.radioButton_percentage_CheckedChanged);
             // 
+            // button_start
+            // 
+            this.button_start.Image = global::ImageResizer.Properties.Resources.accept_button;
+            this.button_start.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_start.Location = new System.Drawing.Point(374, 235);
+            this.button_start.Name = "button_start";
+            this.button_start.Size = new System.Drawing.Size(100, 23);
+            this.button_start.TabIndex = 6;
+            this.button_start.Text = "Start";
+            this.toolTip_main.SetToolTip(this.button_start, "Start resizing images and saving them to the output folder");
+            this.button_start.UseVisualStyleBackColor = true;
+            this.button_start.Click += new System.EventHandler(this.button_start_Click);
+            // 
+            // button_cancel
+            // 
+            this.button_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button_cancel.Image = global::ImageResizer.Properties.Resources.cancel;
+            this.button_cancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_cancel.Location = new System.Drawing.Point(268, 235);
+            this.button_cancel.Name = "button_cancel";
+            this.button_cancel.Size = new System.Drawing.Size(100, 23);
+            this.button_cancel.TabIndex = 8;
+            this.button_cancel.Text = "Cancel";
+            this.toolTip_main.SetToolTip(this.button_cancel, "Close this window");
+            this.button_cancel.UseVisualStyleBackColor = true;
+            this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
+            // 
+            // button_selectOutputFolder
+            // 
+            this.button_selectOutputFolder.Image = global::ImageResizer.Properties.Resources.folder;
+            this.button_selectOutputFolder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_selectOutputFolder.Location = new System.Drawing.Point(374, 190);
+            this.button_selectOutputFolder.Name = "button_selectOutputFolder";
+            this.button_selectOutputFolder.Size = new System.Drawing.Size(100, 23);
+            this.button_selectOutputFolder.TabIndex = 5;
+            this.button_selectOutputFolder.Text = "Select";
+            this.toolTip_main.SetToolTip(this.button_selectOutputFolder, "Select the folder where to save the resulting images");
+            this.button_selectOutputFolder.UseVisualStyleBackColor = true;
+            this.button_selectOutputFolder.Click += new System.EventHandler(this.button_selectOutputFolder_Click);
+            // 
             // Form_Resize
             // 
+            this.AcceptButton = this.button_start;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.button_cancel;
             this.ClientSize = new System.Drawing.Size(489, 271);
+            this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.radioButton_percentage);
             this.Controls.Add(this.radioButton_flat);
             this.Controls.Add(this.button_start);
@@ -347,5 +381,8 @@
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.RadioButton radioButton_flat;
         private System.Windows.Forms.RadioButton radioButton_percentage;
+        private System.Windows.Forms.Button button_cancel;
+        private System.Windows.Forms.ToolTip toolTip_main;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog_main;
     }
 }

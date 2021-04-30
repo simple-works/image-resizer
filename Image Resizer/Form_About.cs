@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ImageResizer
@@ -18,7 +12,17 @@ namespace ImageResizer
 
         private void button_ok_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void linkLabel_email_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("mailto:ambratolm@gmail.com");
+        }
+
+        private void linkLabel_website_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://ambratolm.ml");
         }
     }
 }

@@ -1,29 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Linq;
-using System.Collections.Generic;
 using ImageResizer.Properties;
 
 namespace ImageResizer
 {
     public partial class Form_Main : Form
     {
-        public List<Image> Images { get; set; }
+        public List<Image> InputImages { get; set; }
 
         public Form_Main()
         {
             InitializeComponent();
-            this.Images = new List<Image>();
-            Initialize_comboBox_view();
-            Initialize_listView_main();
+            InputImages = new List<Image>();
+
+            comboBox_view.SetData();
+            listView_main.SetColumns();
+            UpdateButtons();
+
             LoadSettings();
         }
 
         private void LoadSettings()
         {
             comboBox_view.SelectedValue = (Utils.ViewX)Settings.Default.View;
+            Width = UISettings.Default.Width;
+            Height = UISettings.Default.Width;
+            WindowState = UISettings.Default.WindowState;
+            Location = UISettings.Default.Location;
+        }
+
+        private void SaveSettings()
+        {
+            Settings.Default.View = (int)comboBox_view.SelectedValue;
+            Settings.Default.Save();
+            UISettings.Default.Width = Width;
+            UISettings.Default.Width = Height;
+            UISettings.Default.WindowState = WindowState;
+            UISettings.Default.Location = Location;
+            UISettings.Default.Save();
         }
 
         private void LoadImages(params string[] paths)
@@ -31,12 +48,10 @@ namespace ImageResizer
             foreach (string path in paths)
             {
                 string filename = Path.GetFileName(path);
-                string size = path.ToFileSizeFormat();
                 Image image = Image.FromFile(path);
-                string dimensions = image.GetDimensionsString();
 
-                image.Tag = filename;
-                this.Images.Add(image);
+                image.Tag = path;
+                this.InputImages.Add(image);
 
                 if (!listView_main.Items.ContainsKey(path))
                 {
@@ -45,81 +60,61 @@ namespace ImageResizer
                     item.ImageKey = path;
                     item.Text = filename;
                     item.ToolTipText = filename;
-                    item.SubItems.AddRange(new[] { dimensions, size });
+                    item.SubItems.AddRange(new[] { 
+                        image.GetSizeString(), 
+                        path.ToFileSizeString() 
+                    });
                     listView_main.Items.Add(item);
 
                     imageList_main.Images.Add(item.ImageKey, image);
                     imageList_backup.Images.Add(item.ImageKey, image);
+
+                    UpdateButtons();
                 }
             }
-            imageList_backup.ImageSize = new Size(256, 256);
         }
 
-        private void Initialize_comboBox_view()
+        private void UpdateListView()
         {
-            comboBox_view.DataSource = Utils.ViewTypes;
-            comboBox_view.DisplayMember = "Title";
-            comboBox_view.ValueMember = "Value";
+            var viewType = (Utils.ViewType)comboBox_view.SelectedItem;
+            listView_main.SetViewX(viewType.ViewX);
+            listView_main.SetImageSize(viewType.ImageSize, imageList_backup);
         }
 
-        private void Initialize_listView_main()
+        private void UpdateButtons()
         {
-            ColumnHeader nameColumn = new ColumnHeader();
-            nameColumn.Text = "Name";
-            nameColumn.Width = 200;
+            bool itemsAreSelected = (listView_main.SelectedItems.Count != 0);
+            bool itemsExist = (listView_main.Items.Count != 0);
+            button_view.Enabled = itemsAreSelected;
+            button_remove.Enabled = itemsAreSelected;
+            button_clear.Enabled = itemsExist;
+            button_resize.Enabled = itemsExist;
+            button1.Text = InputImages.Count.ToString() + " images";
+        }
 
-            ColumnHeader dimensionsColumn = new ColumnHeader();
-            dimensionsColumn.Text = "Dimensions";
-            dimensionsColumn.Width = 200;
-
-            ColumnHeader sizeColumn = new ColumnHeader();
-            sizeColumn.Text = "Size";
-            sizeColumn.Width = 100;
-
-            listView_main.Columns.AddRange(new[] {
-                nameColumn, dimensionsColumn, sizeColumn 
-            });
-
-            listView_main.FullRowSelect = true;
+        #region Event Handlers
+        private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettings();
         }
 
         private void button_add_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.bmp";
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog_main.ShowDialog() == DialogResult.OK)
             {
-                LoadImages(openFileDialog.FileNames);
+                LoadImages(openFileDialog_main.FileNames);
+                listView_main.Focus();
             }
         }
 
         private void comboBox_view_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var viewType = (Utils.ViewType)comboBox_view.SelectedItem;
-            if ((int)viewType.Value < 5)
-            {
-                listView_main.View = (View)viewType.Value;
-            }
-            else
-            {
-                listView_main.View = View.LargeIcon;
-            }
-            imageList_main.ImageSize = viewType.ImageSize;
-            imageList_main.Images.Clear();
-            foreach (string path in imageList_backup.Images.Keys)
-            {
-                imageList_main.Images.Add(path, imageList_backup.Images[path]);
-            }
+            UpdateListView();
         }
 
         private void listView_main_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (listView_main.SelectedIndices.Count != 0)
-            //{
-            //    int index = listView_main.SelectedIndices[0];
-            //    string key = listView_main.Items[index].ImageKey;
-            //}
+            UpdateButtons();
         }
 
         private void button_about_Click(object sender, EventArgs e)
@@ -129,15 +124,19 @@ namespace ImageResizer
 
         private void button_resize_Click(object sender, EventArgs e)
         {
-            //if (listView_main.Items.Count == 0)
-            //{
-            //    MessageBox.Show("No images", "Alert",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-            //else
+            new Form_Resize(InputImages.ToArray()).ShowDialog();
+        }
+
+        private void button_remove_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listView_main.SelectedItems)
             {
-                new Form_Resize(this.Images.ToArray()).ShowDialog();
+                listView_main.Items.Remove(item);
+                imageList_main.Images.RemoveByKey(item.ImageKey);
+                imageList_backup.Images.RemoveByKey(item.ImageKey);
+                InputImages.RemoveByTag<String>(item.ImageKey);
             }
+            UpdateButtons();
         }
 
         private void button_clear_Click(object sender, EventArgs e)
@@ -145,25 +144,14 @@ namespace ImageResizer
             listView_main.Items.Clear();
             imageList_main.Images.Clear();
             imageList_backup.Images.Clear();
-            this.Images.Clear();
-        }
-
-        private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Settings.Default.View = (int)comboBox_view.SelectedValue;
-            Settings.Default.Save();
+            InputImages.Clear();
+            UpdateButtons();
         }
 
         private void Form_Main_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop)
+                ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
         private void Form_Main_DragDrop(object sender, DragEventArgs e)
@@ -171,5 +159,18 @@ namespace ImageResizer
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
             LoadImages(paths);
         }
+
+        private void button_view_Click(object sender, EventArgs e)
+        {
+            string imageKey = listView_main.SelectedItems[0].ImageKey;
+            Image imageToView = InputImages.FindByTag(imageKey);
+            new Form_View(imageToView).ShowDialog();
+        }
+
+        private void listView_main_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            button_view.PerformClick();
+        }
+        #endregion
     }
 }

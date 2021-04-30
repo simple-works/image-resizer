@@ -28,28 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox_about = new System.Windows.Forms.TextBox();
             this.button_ok = new System.Windows.Forms.Button();
+            this.label_title = new System.Windows.Forms.Label();
+            this.label_copyright = new System.Windows.Forms.Label();
+            this.linkLabel_website = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_email = new System.Windows.Forms.LinkLabel();
+            this.pictureBox_logo = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_logo)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBox_about
-            // 
-            this.textBox_about.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_about.Location = new System.Drawing.Point(12, 12);
-            this.textBox_about.Multiline = true;
-            this.textBox_about.Name = "textBox_about";
-            this.textBox_about.ReadOnly = true;
-            this.textBox_about.Size = new System.Drawing.Size(266, 104);
-            this.textBox_about.TabIndex = 1;
-            this.textBox_about.Text = "Image Resize\r\nVersion 1.0 (32 bits)\r\nCopyright © 2021 Abdelhakim El hafid\r\n\r\nAlia" +
-    "s: Ambratolm\r\nEmail: ambratolm@gmail.com\r\nWebsite: https://ambratolm.ml\r\n";
             // 
             // button_ok
             // 
             this.button_ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_ok.Location = new System.Drawing.Point(203, 122);
+            this.button_ok.Location = new System.Drawing.Point(271, 104);
             this.button_ok.Name = "button_ok";
             this.button_ok.Size = new System.Drawing.Size(75, 23);
             this.button_ok.TabIndex = 0;
@@ -57,13 +50,87 @@
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
             // 
+            // label_title
+            // 
+            this.label_title.AutoSize = true;
+            this.label_title.Location = new System.Drawing.Point(73, 0);
+            this.label_title.Name = "label_title";
+            this.label_title.Size = new System.Drawing.Size(133, 13);
+            this.label_title.TabIndex = 2;
+            this.label_title.Text = "Image Resize 1.0 (32 bits)";
+            // 
+            // label_copyright
+            // 
+            this.label_copyright.AutoSize = true;
+            this.label_copyright.Location = new System.Drawing.Point(73, 20);
+            this.label_copyright.Name = "label_copyright";
+            this.label_copyright.Size = new System.Drawing.Size(253, 13);
+            this.label_copyright.TabIndex = 4;
+            this.label_copyright.Text = "Copyright © 2021 Abdelhakim El hafid @Ambratolm";
+            // 
+            // linkLabel_website
+            // 
+            this.linkLabel_website.AutoSize = true;
+            this.linkLabel_website.Location = new System.Drawing.Point(73, 60);
+            this.linkLabel_website.Name = "linkLabel_website";
+            this.linkLabel_website.Size = new System.Drawing.Size(71, 13);
+            this.linkLabel_website.TabIndex = 5;
+            this.linkLabel_website.TabStop = true;
+            this.linkLabel_website.Text = "ambratolm.ml";
+            this.linkLabel_website.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_website_LinkClicked);
+            // 
+            // linkLabel_email
+            // 
+            this.linkLabel_email.AutoSize = true;
+            this.linkLabel_email.Location = new System.Drawing.Point(73, 40);
+            this.linkLabel_email.Name = "linkLabel_email";
+            this.linkLabel_email.Size = new System.Drawing.Size(114, 13);
+            this.linkLabel_email.TabIndex = 6;
+            this.linkLabel_email.TabStop = true;
+            this.linkLabel_email.Text = "ambratolm@gmail.com";
+            this.linkLabel_email.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_email_LinkClicked);
+            // 
+            // pictureBox_logo
+            // 
+            this.pictureBox_logo.Image = global::ImageResizer.Properties.Resources.logo;
+            this.pictureBox_logo.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox_logo.Name = "pictureBox_logo";
+            this.tableLayoutPanel1.SetRowSpan(this.pictureBox_logo, 4);
+            this.pictureBox_logo.Size = new System.Drawing.Size(64, 80);
+            this.pictureBox_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox_logo.TabIndex = 7;
+            this.pictureBox_logo.TabStop = false;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.20482F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.79518F));
+            this.tableLayoutPanel1.Controls.Add(this.label_title, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label_copyright, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel_email, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel_website, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox_logo, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(334, 86);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
             // Form_About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(290, 153);
+            this.ClientSize = new System.Drawing.Size(358, 135);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.button_ok);
-            this.Controls.Add(this.textBox_about);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -72,14 +139,21 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_logo)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox_about;
         private System.Windows.Forms.Button button_ok;
+        private System.Windows.Forms.Label label_title;
+        private System.Windows.Forms.Label label_copyright;
+        private System.Windows.Forms.LinkLabel linkLabel_website;
+        private System.Windows.Forms.LinkLabel linkLabel_email;
+        private System.Windows.Forms.PictureBox pictureBox_logo;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
