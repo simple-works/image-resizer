@@ -41,7 +41,7 @@ namespace ImageResizer
             foreach (Image image in InputImages)
             {
                 Image outputImage = image.Resize(width, height, unit);
-                string fileName = image.GetOutputFileName();
+                string fileName = outputImage.GetOutputFileName();
                 string folderPath = textBox_outputFolderPath.Text;
                 string fullPath = Path.Combine(folderPath, fileName);
 

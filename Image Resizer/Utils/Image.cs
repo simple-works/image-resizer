@@ -17,7 +17,8 @@ namespace ImageResizer
             ImageFactory imageFactory = new ImageFactory();
             imageFactory.Load(image);
             ResizeLayer config = new ResizeLayer(size, resizeMode);
-            return imageFactory.Resize(config).Image;
+            Image resizedImage = imageFactory.Resize(config).Image;
+            return resizedImage;
         }
         public static Image Resize(this Image image, int width = 0, int height = 0,
             ResizeUnit unit = ResizeUnit.Flat)
@@ -36,9 +37,9 @@ namespace ImageResizer
         public static string GetOutputFileName(this Image image)
         {
             string path = (string)image.Tag;
-            if (String.IsNullOrEmpty(path.Trim()))
+            if (String.IsNullOrEmpty(path))
             {
-                path = "untitled";
+                path = "untitled." + image.RawFormat.ToString();
             }
             string baseFileName = Path.GetFileNameWithoutExtension(path);
             string extension = Path.GetExtension(path);
