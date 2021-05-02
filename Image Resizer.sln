@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image Resizer", "Image Resizer\Image Resizer.csproj", "{391CDE19-0FE5-4746-B772-3D67BEB983D2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{139A51AD-4267-4BAD-948D-324DD58F2BC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,8 @@ Global
 		{391CDE19-0FE5-4746-B772-3D67BEB983D2}.Debug|x86.Build.0 = Debug|x86
 		{391CDE19-0FE5-4746-B772-3D67BEB983D2}.Release|x86.ActiveCfg = Release|x86
 		{391CDE19-0FE5-4746-B772-3D67BEB983D2}.Release|x86.Build.0 = Release|x86
+		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Debug|x86.ActiveCfg = Debug
+		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
