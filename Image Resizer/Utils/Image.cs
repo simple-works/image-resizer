@@ -4,6 +4,8 @@ using ImageProcessor.Imaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Drawing.Imaging;
+using System.Linq;
 
 namespace ImageResizer
 {
@@ -18,6 +20,7 @@ namespace ImageResizer
             imageFactory.Load(image);
             ResizeLayer config = new ResizeLayer(size, resizeMode);
             Image resizedImage = imageFactory.Resize(config).Image;
+            resizedImage.Tag = image.Tag;
             return resizedImage;
         }
         public static Image Resize(this Image image, int width = 0, int height = 0,
@@ -36,15 +39,36 @@ namespace ImageResizer
 
         public static string GetOutputFileName(this Image image)
         {
-            string path = (string)image.Tag;
-            if (String.IsNullOrEmpty(path))
+            string path = image.Tag as string;
+            string fileName = "untitled";
+            string extension = ".notag";
+            if (File.Exists(path))
             {
-                path = "untitled." + image.RawFormat.ToString();
+                fileName = Path.GetFileNameWithoutExtension(path);
+                extension = Path.GetExtension(path);
+                if (String.IsNullOrEmpty(extension))
+                {
+                    string[] extensions = image.GetFileExtensions();
+                    if (extensions != null && extensions.Length != 0)
+                    {
+                        extension = extensions[0];
+                    }
+                    extension = ".noext";
+                }
             }
-            string baseFileName = Path.GetFileNameWithoutExtension(path);
-            string extension = Path.GetExtension(path);
-            return String.Format("{0}_{1}x{2}.{3}",
-                baseFileName, image.Width, image.Height, extension);
+            return String.Format("{0}_{1}x{2}{3}",
+                fileName, image.Width, image.Height, extension);
+        }
+
+        public static string[] GetFileExtensions(this Image image)
+        {
+            ImageCodecInfo imgEncoder = ImageCodecInfo.GetImageEncoders()
+                .FirstOrDefault(encoder => encoder.FormatID == image.RawFormat.Guid);
+            if (imgEncoder == null)
+            {
+                return null;
+            }
+            return imgEncoder.FilenameExtension.ToLower().Replace("*", "").Split(';');
         }
 
         public static double GetAspectRatio(this Image image)
