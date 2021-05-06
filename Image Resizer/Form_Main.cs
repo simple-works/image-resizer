@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using ImageResizer.Properties;
+using System.Linq;
 
 namespace ImageResizer
 {
@@ -43,26 +44,27 @@ namespace ImageResizer
             UISettings.Default.Save();
         }
 
-        private void LoadImages(params string[] paths)
+        private void LoadImages(params string[] filePaths)
         {
-            foreach (string path in paths)
+            foreach (string filePath in filePaths)
             {
-                string filename = Path.GetFileName(path);
-                Image image = Image.FromFile(path);
+                string filename = Path.GetFileName(filePath);
+                Image image = Image.FromFile(filePath);
 
-                image.Tag = path;
+                image.Tag = filePath;
                 this.InputImages.Add(image);
 
-                if (!listView_main.Items.ContainsKey(path))
+                if (!listView_main.Items.ContainsKey(filePath))
                 {
                     var item = new ListViewItem();
-                    item.Name = path;
-                    item.ImageKey = path;
+                    item.Name = filePath;
+                    item.ImageKey = filePath;
                     item.Text = filename;
                     item.ToolTipText = filename;
                     item.SubItems.AddRange(new[] { 
                         image.GetSizeString(), 
-                        path.ToFileSizeString() 
+                        filePath.ToFileSizeString(),
+                        image.GetFromat()
                     });
                     listView_main.Items.Add(item);
 
@@ -157,7 +159,25 @@ namespace ImageResizer
         private void Form_Main_DragDrop(object sender, DragEventArgs e)
         {
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
-            LoadImages(paths);
+            var foldersPaths = paths.Where(path => Directory.Exists(path));
+            var foldersFilesPaths = foldersPaths
+                .Select(folderPath => Directory.GetFiles(folderPath))
+                .SelectMany(folderPath => folderPath);
+            var filePaths = paths.Except(foldersPaths).Union(foldersFilesPaths);
+
+            string[] validFilePaths = filePaths
+                .Where(filePath => filePath.IsImage()).ToArray();
+            LoadImages(validFilePaths);
+
+            string[] invalidFilePaths = filePaths.Except(validFilePaths).ToArray();
+            if (invalidFilePaths.Length != 0)
+            {
+                string message =
+                    String.Format("These files are invalid image files:\n{0}",
+                    String.Join("\n", invalidFilePaths));
+                MessageBox.Show(message, "Invalid Image File",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void button_view_Click(object sender, EventArgs e)

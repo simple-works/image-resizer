@@ -69,16 +69,21 @@ namespace ImageResizer
 
             ColumnHeader dimensionsColumn = new ColumnHeader();
             dimensionsColumn.Text = "Dimensions";
-            dimensionsColumn.Width = 200;
+            dimensionsColumn.Width = 100;
 
             ColumnHeader sizeColumn = new ColumnHeader();
             sizeColumn.Text = "Size";
             sizeColumn.Width = 100;
 
+            ColumnHeader formatColumn = new ColumnHeader();
+            formatColumn.Text = "Format";
+            formatColumn.Width = 100;
+
             listview.Columns.AddRange(new[] {
                 nameColumn, 
                 dimensionsColumn, 
-                sizeColumn 
+                sizeColumn,
+                formatColumn
             });
 
             listview.FullRowSelect = true;

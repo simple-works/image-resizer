@@ -33,7 +33,6 @@ Global
 		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Release|Any CPU.ActiveCfg = Release
 		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Release|Any CPU.Build.0 = Release
 		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Release|Mixed Platforms.ActiveCfg = Release
-		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Release|Mixed Platforms.Build.0 = Release
 		{139A51AD-4267-4BAD-948D-324DD58F2BC6}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

@@ -71,6 +71,29 @@ namespace ImageResizer
             return imgEncoder.FilenameExtension.ToLower().Replace("*", "").Split(';');
         }
 
+        public static string GetFromat(this Image image)
+        {
+            ImageCodecInfo imgEncoder = ImageCodecInfo.GetImageEncoders()
+               .FirstOrDefault(encoder => encoder.FormatID == image.RawFormat.Guid);
+            if (imgEncoder == null)
+            {
+                return "";
+            }
+            return imgEncoder.MimeType;
+        }
+
+        public static bool IsImage(this string filePath)
+        {
+            try
+            {
+                return Image.FromFile(filePath) != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public static double GetAspectRatio(this Image image)
         {
             return image.Width / (double)image.Height;

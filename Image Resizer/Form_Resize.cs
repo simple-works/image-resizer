@@ -48,9 +48,8 @@ namespace ImageResizer
                 if (File.Exists(fullPath))
                 {
                     var dialogResult = MessageBox.Show(
-                        String.Format("A file named \"{0}\" already exists in the output folder.\nOverwrite it ?",
-                        fileName),
-                        "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        String.Format("This file already exists:\n{0}\nOverwrite it ?", fullPath),
+                        "File Already Exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (dialogResult == DialogResult.Yes)
                     {
                         outputImage.Save(fullPath);
