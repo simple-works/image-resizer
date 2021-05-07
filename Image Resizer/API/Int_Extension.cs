@@ -1,9 +1,8 @@
 ﻿using System;
-using System.IO;
 
 namespace ImageResizer
 {
-    public static partial class Utils
+    public static partial class API
     {
         public static string ToFileSizeString(this long byteCount, bool spaced = true)
         {
@@ -20,18 +19,6 @@ namespace ImageResizer
                     + (spaced ? " " : "") + suffixes[place];
             }
         }
-        public static string ToFileSizeString(this string path, bool spaced = true)
-        {
-            FileInfo file = new FileInfo(path);
-            if (file.Exists)
-            {
-                return file.Length.ToFileSizeString(spaced);
-            }
-            else
-            {
-                return 0L.ToFileSizeString();
-            }
-        }
 
         public static int ToFlat(this int percentage, int total)
         {
@@ -42,6 +29,7 @@ namespace ImageResizer
         {
             return Convert.ToInt32(flat * (100.0 / total));
         }
+
         public static string ToPercentageString(this int flat, int total, bool spaced = true)
         {
             return flat.ToPercentage(total).ToString() + (spaced ? " %" : "%");

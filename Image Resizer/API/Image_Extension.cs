@@ -1,15 +1,15 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using ImageProcessor;
 using ImageProcessor.Imaging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Drawing.Imaging;
-using System.Linq;
 
 namespace ImageResizer
 {
-    public static partial class Utils
+    public static partial class API
     {
         public enum ResizeUnit { Flat, Percentage }
 
@@ -23,6 +23,7 @@ namespace ImageResizer
             resizedImage.Tag = image.Tag;
             return resizedImage;
         }
+
         public static Image Resize(this Image image, int width = 0, int height = 0,
             ResizeUnit unit = ResizeUnit.Flat)
         {
@@ -82,51 +83,9 @@ namespace ImageResizer
             return imgEncoder.MimeType;
         }
 
-        public static bool IsImage(this string filePath)
-        {
-            try
-            {
-                return Image.FromFile(filePath) != null;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
         public static double GetAspectRatio(this Image image)
         {
             return image.Width / (double)image.Height;
-        }
-        public static double GetAspectRatio(this Size size)
-        {
-            return size.Width / (double)size.Height;
-        }
-        public static double GetAspectRatio(int width, int height)
-        {
-            return width / (double)height;
-        }
-
-        public static Size ToSize(this Size size, int width = 0, int height = 0)
-        {
-            if (width != 0 && height != 0)
-            {
-                return new Size(width, height);
-            }
-            if (width == 0 && height != 0)
-            {
-                return new Size(Convert.ToInt32(height * size.GetAspectRatio()), height);
-            }
-            if (width != 0 && height == 0)
-            {
-                return new Size(width, Convert.ToInt32(width / size.GetAspectRatio()));
-            }
-            return size;
-        }
-
-        public static string ToSizeString(this Size size, bool spaced = true)
-        {
-            return (size.Width + (spaced ? " x " : "x") + size.Height).ToString();
         }
 
         public static string GetSizeString(this Image image, bool spaced = true)

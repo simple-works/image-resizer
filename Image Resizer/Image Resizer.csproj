@@ -53,6 +53,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\ComboBox_Extension.cs" />
+    <Compile Include="API\ImageList_Extension.cs" />
+    <Compile Include="API\Size_Extension.cs" />
+    <Compile Include="API\String_Extension.cs" />
+    <Compile Include="Form_Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Loading.Designer.cs">
+      <DependentUpon>Form_Loading.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Resize.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,11 +92,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>UISettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Utils\Image.cs" />
-    <Compile Include="Utils\Control.cs" />
+    <Compile Include="API\Image_Extension.cs" />
+    <Compile Include="API\ListView_Extension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\Number.cs" />
+    <Compile Include="API\Int_Extension.cs" />
+    <EmbeddedResource Include="Form_Loading.resx">
+      <DependentUpon>Form_Loading.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_Resize.resx">
       <DependentUpon>Form_Resize.cs</DependentUpon>
     </EmbeddedResource>

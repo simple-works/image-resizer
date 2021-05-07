@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using System.Collections.Generic;
 
 namespace ImageResizer
 {
-    public static partial class Utils
+    public static partial class API
     {
         public enum ViewX
         {
@@ -15,7 +17,6 @@ namespace ImageResizer
             LargeIcon = 5,
             ExtraLargeIcon = 6
         }
-
         public class ViewType
         {
             public string Title { get; set; }
@@ -30,7 +31,7 @@ namespace ImageResizer
         }
         public static ViewType[] ViewTypes { get; set; }
 
-        static Utils()
+        static API()
         {
             ViewTypes = new[]
             {
@@ -89,11 +90,22 @@ namespace ImageResizer
             listview.FullRowSelect = true;
         }
 
-        public static void SetData(this ComboBox comboBox)
+        public static void AddImageItem(this ListView listView, Image image)
         {
-            comboBox.DataSource = Utils.ViewTypes;
-            comboBox.DisplayMember = "Title";
-            comboBox.ValueMember = "ViewX";
+            string filePath = image.Tag as string;
+            if (!listView.Items.ContainsKey(filePath))
+            {
+                var item = new ListViewItem();
+                item.Name = filePath;
+                item.ImageKey = filePath;
+                item.Text = item.ToolTipText = Path.GetFileName(filePath);
+                item.SubItems.AddRange(new[] { 
+                    image.GetSizeString(), 
+                    filePath.ToFileSizeString(),
+                    image.GetFromat()
+                });
+                listView.Items.Add(item);
+            }
         }
     }
 }

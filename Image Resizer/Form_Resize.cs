@@ -24,18 +24,18 @@ namespace ImageResizer
         {
             int width = 0;
             int height = 0;
-            Utils.ResizeUnit unit = 0;
+            API.ResizeUnit unit = 0;
             if (radioButton_flat.Checked)
             {
                 width = (int)numUD_width.Value;
                 height = (int)numUD_height.Value;
-                unit = Utils.ResizeUnit.Flat;
+                unit = API.ResizeUnit.Flat;
             }
             else
             {
                 width = (int)numUD_widthPc.Value;
                 height = (int)numUD_heightPc.Value;
-                unit = Utils.ResizeUnit.Percentage;
+                unit = API.ResizeUnit.Percentage;
             }
 
             foreach (Image image in InputImages)

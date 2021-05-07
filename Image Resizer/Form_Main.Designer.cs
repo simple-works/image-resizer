@@ -35,7 +35,6 @@
             this.imageList_main = new System.Windows.Forms.ImageList(this.components);
             this.imageList_backup = new System.Windows.Forms.ImageList(this.components);
             this.toolTip_main = new System.Windows.Forms.ToolTip(this.components);
-            this.openFileDialog_main = new System.Windows.Forms.OpenFileDialog();
             this.button_resize = new System.Windows.Forms.Button();
             this.button_clear = new System.Windows.Forms.Button();
             this.button_view = new System.Windows.Forms.Button();
@@ -43,6 +42,8 @@
             this.button_about = new System.Windows.Forms.Button();
             this.button_add = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.openFileDialog_main = new System.Windows.Forms.OpenFileDialog();
+            this.backgroundWorker_main = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // comboBox_view
@@ -85,12 +86,6 @@
             this.imageList_backup.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList_backup.ImageSize = new System.Drawing.Size(256, 256);
             this.imageList_backup.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // openFileDialog_main
-            // 
-            this.openFileDialog_main.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.b" +
-    "mp";
-            this.openFileDialog_main.Multiselect = true;
             // 
             // button_resize
             // 
@@ -193,6 +188,20 @@
             this.toolTip_main.SetToolTip(this.button1, "Number of images in the list");
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // openFileDialog_main
+            // 
+            this.openFileDialog_main.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.b" +
+    "mp";
+            this.openFileDialog_main.Multiselect = true;
+            // 
+            // backgroundWorker_main
+            // 
+            this.backgroundWorker_main.WorkerReportsProgress = true;
+            this.backgroundWorker_main.WorkerSupportsCancellation = true;
+            this.backgroundWorker_main.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_main_DoWork);
+            this.backgroundWorker_main.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_main_ProgressChanged);
+            this.backgroundWorker_main.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_main_RunWorkerCompleted);
+            // 
             // Form_Main
             // 
             this.AcceptButton = this.button_resize;
@@ -238,6 +247,7 @@
         private System.Windows.Forms.ToolTip toolTip_main;
         private System.Windows.Forms.OpenFileDialog openFileDialog_main;
         private System.Windows.Forms.Button button1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_main;
 
 
     }

@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace ImageResizer
+{
+    public partial class Form_Loading : Form
+    {
+        public string Title
+        {
+            get { return label_title.Text; }
+            set { label_title.Text = value; }
+        }
+        public int ProgressPercentage
+        {
+            get { return progressBar_main.Value; }
+        }
+        public Action CancelProgress;
+
+        public Form_Loading()
+        {
+            InitializeComponent();
+        }
+
+        public void SetProgressPercentage(int percentage)
+        {
+            if (percentage >= progressBar_main.Minimum &&
+                percentage <= progressBar_main.Maximum)
+            {
+                progressBar_main.Value = percentage;
+                label_progressPercentage.Text = String.Format("{0}%", percentage);
+            }
+        }
+
+        private void button_cancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Form_Loading_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CancelProgress();
+        }
+    }
+}
