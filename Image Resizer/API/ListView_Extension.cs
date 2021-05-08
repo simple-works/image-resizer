@@ -45,24 +45,20 @@ namespace ImageResizer
             };
         }
 
-        public static void SetViewX(this ListView listView, ViewX viewX)
+        public static ImageList GetBackupImageList(this ListView listView)
         {
-            listView.View = ((int)viewX < 5) ? (View)viewX : View.LargeIcon;
-        }
-
-        public static void SetImageSize(this ListView listView, Size imageSize,
-            ImageList bckImageList)
-        {
-            ImageList srcImageList = listView.LargeImageList;
-            srcImageList.ImageSize = imageSize;
-            srcImageList.Images.Clear();
-            foreach (string key in bckImageList.Images.Keys)
+            if (listView.Tag == null)
             {
-                srcImageList.Images.Add(key, bckImageList.Images[key]);
+                listView.Tag = new ImageList();
+                ImageList bckImageList = listView.Tag as ImageList;
+                bckImageList.ImageSize = listView.LargeImageList.ImageSize;
+                bckImageList.ColorDepth = listView.LargeImageList.ColorDepth;
+                return bckImageList;
             }
+            return listView.Tag as ImageList;
         }
 
-        public static void SetColumns(this ListView listview)
+        public static void Setup(this ListView listView)
         {
             ColumnHeader nameColumn = new ColumnHeader();
             nameColumn.Text = "Name";
@@ -80,14 +76,31 @@ namespace ImageResizer
             formatColumn.Text = "Format";
             formatColumn.Width = 100;
 
-            listview.Columns.AddRange(new[] {
+            listView.Columns.AddRange(new[] {
                 nameColumn, 
                 dimensionsColumn, 
                 sizeColumn,
                 formatColumn
             });
 
-            listview.FullRowSelect = true;
+            listView.FullRowSelect = true;
+        }
+
+        public static void SetViewX(this ListView listView, ViewX viewX)
+        {
+            listView.View = ((int)viewX < 5) ? (View)viewX : View.LargeIcon;
+        }
+
+        public static void SetImageSize(this ListView listView, Size imageSize)
+        {
+            listView.LargeImageList.ImageSize = imageSize;
+            listView.LargeImageList.FillWith(listView.Tag as ImageList);
+        }
+
+        public static void SetViewType(this ListView listView, ViewType viewType)
+        {
+            listView.SetViewX(viewType.ViewX);
+            listView.SetImageSize(viewType.ImageSize);
         }
 
         public static void AddImageItem(this ListView listView, Image image)
@@ -105,7 +118,23 @@ namespace ImageResizer
                     image.GetFromat()
                 });
                 listView.Items.Add(item);
+                listView.LargeImageList.AddImage(image);
+                listView.GetBackupImageList().AddImage(image);
             }
+        }
+
+        public static void RemoveImageItem(this ListView listView, ListViewItem item)
+        {
+            listView.Items.Remove(item);
+            listView.LargeImageList.Images.RemoveByKey(item.ImageKey);
+            listView.GetBackupImageList().Images.RemoveByKey(item.ImageKey);
+        }
+
+        public static void ClearImageItems(this ListView listView)
+        {
+            listView.Items.Clear();
+            listView.LargeImageList.Images.Clear();
+            listView.GetBackupImageList().Images.Clear();
         }
     }
 }

@@ -11,10 +11,22 @@ namespace ImageResizer
 {
     public partial class Form_Loading : Form
     {
+        private static Form_Loading s_singleton;
+        public static Form_Loading Singleton
+        {
+            get
+            {
+                if (s_singleton == null || s_singleton.IsDisposed)
+                {
+                    s_singleton = new Form_Loading();
+                }
+                return s_singleton;
+            }
+        }
         public string Title
         {
             get { return label_title.Text; }
-            set { label_title.Text = value; }
+            set { label_title.Text = value; } 
         }
         public int ProgressPercentage
         {

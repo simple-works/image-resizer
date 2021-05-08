@@ -33,7 +33,6 @@
             this.comboBox_view = new System.Windows.Forms.ComboBox();
             this.listView_main = new System.Windows.Forms.ListView();
             this.imageList_main = new System.Windows.Forms.ImageList(this.components);
-            this.imageList_backup = new System.Windows.Forms.ImageList(this.components);
             this.toolTip_main = new System.Windows.Forms.ToolTip(this.components);
             this.button_resize = new System.Windows.Forms.Button();
             this.button_clear = new System.Windows.Forms.Button();
@@ -78,14 +77,8 @@
             // imageList_main
             // 
             this.imageList_main.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imageList_main.ImageSize = new System.Drawing.Size(32, 32);
+            this.imageList_main.ImageSize = new System.Drawing.Size(256, 256);
             this.imageList_main.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // imageList_backup
-            // 
-            this.imageList_backup.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imageList_backup.ImageSize = new System.Drawing.Size(256, 256);
-            this.imageList_backup.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // button_resize
             // 
@@ -240,7 +233,6 @@
         private System.Windows.Forms.Button button_about;
         private System.Windows.Forms.ImageList imageList_main;
         private System.Windows.Forms.Button button_resize;
-        private System.Windows.Forms.ImageList imageList_backup;
         private System.Windows.Forms.Button button_clear;
         private System.Windows.Forms.Button button_remove;
         private System.Windows.Forms.Button button_view;

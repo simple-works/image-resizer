@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\ComboBox_Extension.cs" />
+    <Compile Include="API\Form_Extension.cs" />
     <Compile Include="API\ImageList_Extension.cs" />
     <Compile Include="API\Size_Extension.cs" />
     <Compile Include="API\String_Extension.cs" />

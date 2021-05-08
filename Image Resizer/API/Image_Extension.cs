@@ -12,6 +12,18 @@ namespace ImageResizer
     public static partial class API
     {
         public enum ResizeUnit { Flat, Percentage }
+        public static string GetFilePath(this Image image)
+        {
+            if (image.Tag == null)
+            {
+                image.Tag = "";
+            }
+            return image.Tag as string;
+        }
+        public static void SetFilePath(this Image image, string filePath)
+        {
+            image.Tag = filePath;
+        }
 
         public static Image Resize(this Image image, Size size,
             ResizeMode resizeMode = ResizeMode.Stretch)
@@ -20,7 +32,7 @@ namespace ImageResizer
             imageFactory.Load(image);
             ResizeLayer config = new ResizeLayer(size, resizeMode);
             Image resizedImage = imageFactory.Resize(config).Image;
-            resizedImage.Tag = image.Tag;
+            resizedImage.SetFilePath(image.GetFilePath());
             return resizedImage;
         }
 
@@ -40,13 +52,13 @@ namespace ImageResizer
 
         public static string GetOutputFileName(this Image image)
         {
-            string path = image.Tag as string;
+            string filePath = image.GetFilePath();
             string fileName = "untitled";
-            string extension = ".notag";
-            if (File.Exists(path))
+            string extension = ".nopath";
+            if (File.Exists(filePath))
             {
-                fileName = Path.GetFileNameWithoutExtension(path);
-                extension = Path.GetExtension(path);
+                fileName = Path.GetFileNameWithoutExtension(filePath);
+                extension = Path.GetExtension(filePath);
                 if (String.IsNullOrEmpty(extension))
                 {
                     string[] extensions = image.GetFileExtensions();
@@ -93,14 +105,14 @@ namespace ImageResizer
             return image.Size.ToSizeString(spaced);
         }
 
-        public static Image FindByTag<T>(this List<Image> images, T tag)
+        public static Image FindByFilePath(this List<Image> images, string filePath)
         {
-            return images.Find(image => image.Tag.Equals(tag));
+            return images.Find(image => image.GetFilePath() == filePath);
         }
 
-        public static void RemoveByTag<T>(this List<Image> images, T tag)
+        public static void RemoveByFilePath(this List<Image> images, string filePath)
         {
-            Image imageToRemove = images.FindByTag<T>(tag);
+            Image imageToRemove = images.FindByFilePath(filePath);
             if (imageToRemove != null)
             {
                 images.Remove(imageToRemove);
