@@ -12,6 +12,7 @@ namespace ImageResizer
     public static partial class API
     {
         public enum ResizeUnit { Flat, Percentage }
+
         public static string GetFilePath(this Image image)
         {
             if (image.Tag == null)
@@ -73,26 +74,21 @@ namespace ImageResizer
                 fileName, image.Width, image.Height, extension);
         }
 
-        public static string[] GetFileExtensions(this Image image)
+        public static ImageCodecInfo GetEncoder(this Image image)
         {
             ImageCodecInfo imgEncoder = ImageCodecInfo.GetImageEncoders()
-                .FirstOrDefault(encoder => encoder.FormatID == image.RawFormat.Guid);
+               .FirstOrDefault(encoder => encoder.FormatID == image.RawFormat.Guid);
+            return imgEncoder;
+        }
+
+        public static string[] GetFileExtensions(this Image image)
+        {
+            ImageCodecInfo imgEncoder = image.GetEncoder();
             if (imgEncoder == null)
             {
                 return null;
             }
             return imgEncoder.FilenameExtension.ToLower().Replace("*", "").Split(';');
-        }
-
-        public static string GetFromat(this Image image)
-        {
-            ImageCodecInfo imgEncoder = ImageCodecInfo.GetImageEncoders()
-               .FirstOrDefault(encoder => encoder.FormatID == image.RawFormat.Guid);
-            if (imgEncoder == null)
-            {
-                return "";
-            }
-            return imgEncoder.MimeType;
         }
 
         public static double GetAspectRatio(this Image image)

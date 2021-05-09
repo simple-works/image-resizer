@@ -10,7 +10,7 @@ namespace ImageResizer
         {
             InitializeComponent();
             Text = string.Format("{0} ({1})",
-                Path.GetFileName((string)image.Tag), image.GetSizeString());
+                Path.GetFileName(image.GetFilePath()), image.GetSizeString());
 
             Width = image.Size.Width;
             Height = image.Size.Height;

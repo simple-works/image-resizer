@@ -26,7 +26,7 @@ namespace ImageResizer
         public string Title
         {
             get { return label_title.Text; }
-            set { label_title.Text = value; } 
+            set { label_title.Text = value; }
         }
         public int ProgressPercentage
         {

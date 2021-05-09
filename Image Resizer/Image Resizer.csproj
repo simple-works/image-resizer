@@ -53,11 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\ComboBox_Extension.cs" />
-    <Compile Include="API\Form_Extension.cs" />
-    <Compile Include="API\ImageList_Extension.cs" />
-    <Compile Include="API\Size_Extension.cs" />
-    <Compile Include="API\String_Extension.cs" />
+    <Compile Include="API\Controls_Extensions\BackgroundWorker_Extension.cs" />
+    <Compile Include="API\Controls_Extensions\ComboBox_Extension.cs" />
+    <Compile Include="API\Controls_Extensions\ImageList_Extension.cs" />
+    <Compile Include="API\Extensions\Size_Extension.cs" />
+    <Compile Include="API\Extensions\String_Extension.cs" />
+    <Compile Include="API\ViewMode.cs" />
     <Compile Include="Form_Loading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,11 +94,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>UISettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="API\Image_Extension.cs" />
-    <Compile Include="API\ListView_Extension.cs" />
+    <Compile Include="API\Extensions\Image_Extension.cs" />
+    <Compile Include="API\Controls_Extensions\ListView_Extension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="API\Int_Extension.cs" />
+    <Compile Include="API\Extensions\Int_Extension.cs" />
     <EmbeddedResource Include="Form_Loading.resx">
       <DependentUpon>Form_Loading.cs</DependentUpon>
     </EmbeddedResource>

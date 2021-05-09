@@ -23,7 +23,7 @@ namespace ImageResizer
             if (File.Exists(filePath))
             {
                 Image image = Image.FromFile(filePath);
-                image.Tag = filePath;
+                image.SetFilePath(filePath);
                 return image;
             }
             return null;

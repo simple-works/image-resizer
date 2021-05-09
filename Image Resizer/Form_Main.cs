@@ -12,27 +12,62 @@ namespace ImageResizer
     public partial class Form_Main : Form
     {
         private List<Image> _inputImages = new List<Image>();
-        private Form_Loading _form_loading = new Form_Loading();
+        private Form_Loading _loadingForm = Form_Loading.Singleton;
 
         public Form_Main()
         {
             InitializeComponent();
-            this.Setup();
-            comboBox_view.Setup();
-            listView_main.Setup();
+
+            Width = UISettings.Default.Width;
+            Height = UISettings.Default.Width;
+            WindowState = UISettings.Default.WindowState;
+            Location = UISettings.Default.Location;
+
+            comboBox_view.SetDataSource(API.ViewModes, "Title", "ViewX");
+            comboBox_view.SelectedValue = (API.ViewX)Settings.Default.View;
+
+            listView_main.AddColumn("Name", 200);
+            listView_main.AddColumn("Dimensions", 100);
+            listView_main.AddColumn("Size", 100);
+            listView_main.AddColumn("Format", 100);
+            listView_main.FullRowSelect = true;
+
             listView_main_SelectedIndexChanged(null, null);
+        }
+
+        private void LoadImages(string[] filePaths)
+        {
+            if (!backgroundWorker_main.IsBusy)
+            {
+                backgroundWorker_main.RunWorkerAsync(filePaths);
+                _loadingForm.Title = "Opening image files...";
+                _loadingForm.CancelProgress = () =>
+                {
+                    if (backgroundWorker_main.WorkerSupportsCancellation)
+                    {
+                        backgroundWorker_main.CancelAsync();
+                    }
+                };
+                _loadingForm.ShowDialog();
+            }
         }
 
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Persist();
-            comboBox_view.Persist();
+            UISettings.Default.Width = Width;
+            UISettings.Default.Width = Height;
+            UISettings.Default.WindowState = WindowState;
+            UISettings.Default.Location = Location;
+            UISettings.Default.Save();
+
+            Settings.Default.View = (int)comboBox_view.SelectedValue;
+            Settings.Default.Save();
         }
 
         private void comboBox_view_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var viewType = comboBox_view.SelectedItem as API.ViewType;
-            listView_main.SetViewType(viewType);
+            API.ViewMode viewType = comboBox_view.SelectedItem as API.ViewMode;
+            listView_main.SetViewMode(viewType);
         }
 
         private void listView_main_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,27 +158,6 @@ namespace ImageResizer
             button_view.PerformClick();
         }
 
-        private void LoadImages(string[] filePaths)
-        {
-            if (!backgroundWorker_main.IsBusy)
-            {
-                backgroundWorker_main.RunWorkerAsync(filePaths);
-                if (_form_loading == null || _form_loading.IsDisposed)
-                {
-                    _form_loading = new Form_Loading();
-                }
-                _form_loading.Title = "Opening image files...";
-                _form_loading.CancelProgress = () =>
-                {
-                    if (backgroundWorker_main.WorkerSupportsCancellation == true)
-                    {
-                        backgroundWorker_main.CancelAsync();
-                    }
-                };
-                _form_loading.ShowDialog();
-            }
-        }
-
         private void backgroundWorker_main_DoWork(object sender, DoWorkEventArgs e)
         {
             string[] filePaths = e.Argument as string[];
@@ -158,22 +172,22 @@ namespace ImageResizer
                 {
                     Image image = filePaths[i].LoadImage();
                     _inputImages.Add(image);
-                    int progressPercentage = (i + 1).ToPercentage(filePaths.Length);
-                    backgroundWorker_main.ReportProgress(progressPercentage, image);
+                    backgroundWorker_main.ReportProgressAsPercentage(i + 1, 
+                        filePaths.Length, image);
                 }
             }
         }
 
         private void backgroundWorker_main_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            _form_loading.SetProgressPercentage(e.ProgressPercentage);
+            _loadingForm.SetProgressPercentage(e.ProgressPercentage);
             Image image = e.UserState as Image;
             listView_main.AddImageItem(image);
         }
 
         private void backgroundWorker_main_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _form_loading.Close();
+            _loadingForm.Close();
             listView_main.Focus();
             listView_main_SelectedIndexChanged(null, null);
         }

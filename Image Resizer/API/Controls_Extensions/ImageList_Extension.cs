@@ -11,7 +11,7 @@ namespace ImageResizer
     {
         public static void AddImage(this ImageList imageList, Image image)
         {
-            imageList.Images.Add(image.Tag as string, image);
+            imageList.Images.Add(image.GetFilePath(), image);
         }
 
         public static void FillWith(this ImageList imageList, ImageList srcImageList)
