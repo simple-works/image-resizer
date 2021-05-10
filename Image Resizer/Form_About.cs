@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using ImageResizer.Properties;
 
 namespace ImageResizer
 {
@@ -8,6 +9,7 @@ namespace ImageResizer
         public Form_About()
         {
             InitializeComponent();
+            textBox_thirdPartyLicenses.Text = Resources.ThirdPartyLicenses;
         }
 
         private void button_ok_Click(object sender, EventArgs e)

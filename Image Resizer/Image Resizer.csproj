@@ -146,6 +146,7 @@
     <None Include="Resources\logo.bmp" />
     <None Include="Resources\background.jpg" />
     <None Include="Resources\image.png" />
+    <None Include="Resources\ThirdPartyLicenses.txt" />
     <Content Include="Todo.txt" />
     <None Include="Resources\cross.png" />
     <None Include="Resources\folder.png" />

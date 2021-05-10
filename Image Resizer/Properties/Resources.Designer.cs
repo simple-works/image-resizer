@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImageResizer.Properties
-{
-
-
+namespace ImageResizer.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
     /// </summary>
@@ -177,6 +177,25 @@ namespace ImageResizer.Properties
             get {
                 object obj = ResourceManager.GetObject("resize_picture", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à ImageProcessor 2.5.0
+        ///https://imageprocessor.org
+        ///© Copyright 2018 Six Labors
+        ///Licensed under the Apache License 2.0
+        ///http://www.apache.org/licenses/LICENSE-2.0
+        ///
+        ///Free FatCow Farm Fresh Icons 3.92
+        ///http://www.fatcow.com/free-icons
+        ///© Copyright 2009-2014 FatCow Web Hosting
+        ///Licensed under the Creative Commons Attribution 3.0 License
+        ///https://creativecommons.org/licenses/by/3.0/us.
+        /// </summary>
+        internal static string ThirdPartyLicenses {
+            get {
+                return ResourceManager.GetString("ThirdPartyLicenses", resourceCulture);
             }
         }
     }
