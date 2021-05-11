@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using ImageResizer.Properties;
 
@@ -19,12 +20,12 @@ namespace ImageResizer
 
         private void linkLabel_email_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("mailto:ambratolm@gmail.com");
+            Process.Start("mailto:ambratolm@gmail.com");
         }
 
         private void linkLabel_website_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://ambratolm.ml");
+            Process.Start("http://ambratolm.ml");
         }
     }
 }

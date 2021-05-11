@@ -40,7 +40,7 @@
             this.button_remove = new System.Windows.Forms.Button();
             this.button_about = new System.Windows.Forms.Button();
             this.button_add = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_imagesCount = new System.Windows.Forms.Button();
             this.openFileDialog_main = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker_main = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
@@ -138,10 +138,14 @@
             // button_about
             // 
             this.button_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_about.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_about.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.button_about.FlatAppearance.BorderSize = 0;
+            this.button_about.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_about.Image = global::ImageResizer.Properties.Resources.help;
             this.button_about.Location = new System.Drawing.Point(12, 326);
             this.button_about.Name = "button_about";
-            this.button_about.Size = new System.Drawing.Size(50, 23);
+            this.button_about.Size = new System.Drawing.Size(25, 23);
             this.button_about.TabIndex = 12;
             this.toolTip_main.SetToolTip(this.button_about, "About");
             this.button_about.UseVisualStyleBackColor = true;
@@ -161,25 +165,26 @@
             this.button_add.UseVisualStyleBackColor = true;
             this.button_add.Click += new System.EventHandler(this.button_add_Click);
             // 
-            // button1
+            // button_imagesCount
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.AutoSize = true;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::ImageResizer.Properties.Resources.image;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.Location = new System.Drawing.Point(366, 326);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "0 images";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip_main.SetToolTip(this.button1, "Number of images in the list");
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_imagesCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_imagesCount.AutoSize = true;
+            this.button_imagesCount.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.button_imagesCount.FlatAppearance.BorderSize = 0;
+            this.button_imagesCount.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_imagesCount.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.button_imagesCount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_imagesCount.Image = global::ImageResizer.Properties.Resources.image;
+            this.button_imagesCount.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_imagesCount.Location = new System.Drawing.Point(366, 326);
+            this.button_imagesCount.Name = "button_imagesCount";
+            this.button_imagesCount.Size = new System.Drawing.Size(100, 23);
+            this.button_imagesCount.TabIndex = 18;
+            this.button_imagesCount.Text = "0 images";
+            this.button_imagesCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_imagesCount.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip_main.SetToolTip(this.button_imagesCount, "Number of images in the list");
+            this.button_imagesCount.UseVisualStyleBackColor = true;
             // 
             // openFileDialog_main
             // 
@@ -203,7 +208,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_clear;
             this.ClientSize = new System.Drawing.Size(584, 362);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_imagesCount);
             this.Controls.Add(this.button_view);
             this.Controls.Add(this.button_remove);
             this.Controls.Add(this.button_clear);
@@ -238,7 +243,7 @@
         private System.Windows.Forms.Button button_view;
         private System.Windows.Forms.ToolTip toolTip_main;
         private System.Windows.Forms.OpenFileDialog openFileDialog_main;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_imagesCount;
         private System.ComponentModel.BackgroundWorker backgroundWorker_main;
 
 

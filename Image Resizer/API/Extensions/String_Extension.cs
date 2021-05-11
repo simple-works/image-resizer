@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace ImageResizer
 {
@@ -40,6 +41,16 @@ namespace ImageResizer
             {
                 return 0L.ToFileSizeString();
             }
+        }
+
+        public static string[] ToFilePathsOnly(this string[] paths)
+        {
+            var foldersPaths = paths.Where(path => Directory.Exists(path));
+            var foldersFilesPaths = foldersPaths
+                .Select(folderPath => Directory.GetFiles(folderPath))
+                .SelectMany(folderPath => folderPath);
+            var filePaths = paths.Except(foldersPaths).Union(foldersFilesPaths);
+            return filePaths.ToArray();
         }
     }
 }
