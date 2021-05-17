@@ -11,7 +11,6 @@ namespace ImageResizer
     partial class Form_Main
     {
         private List<Image> _inputImages = new List<Image>();
-        private Form_Loading _loadingForm = Form_Loading.Singleton;
 
         public void SetupControls()
         {
@@ -20,7 +19,7 @@ namespace ImageResizer
             listView_main.AddColumn("Size", 100);
             listView_main.AddColumn("Format", 100);
             listView_main.FullRowSelect = true;
-            comboBox_view.SetDataSource(API.ViewModes, "Title", "ViewX");
+            comboBox_view.SetDataSource(API.GetViewModes(), "Title", "ViewX");
         }
 
         public void UpdateControls()
@@ -112,15 +111,16 @@ namespace ImageResizer
             if (!backgroundWorker_main.IsBusy)
             {
                 backgroundWorker_main.RunWorkerAsync(filePaths);
-                _loadingForm.Title = "Opening image files...";
-                _loadingForm.CancelProgress = () =>
-                {
-                    if (backgroundWorker_main.WorkerSupportsCancellation)
+                Form_Loading.Singleton.ShowDialog(
+                    title: "Opening image files...",
+                    cancelProgress: () =>
                     {
-                        backgroundWorker_main.CancelAsync();
+                        if (backgroundWorker_main.WorkerSupportsCancellation)
+                        {
+                            backgroundWorker_main.CancelAsync();
+                        }
                     }
-                };
-                _loadingForm.ShowDialog();
+                );
             }
         }
 
@@ -145,13 +145,13 @@ namespace ImageResizer
         }
         public void ProgressLoadImage(ProgressChangedEventArgs e)
         {
-            _loadingForm.SetProgressPercentage(e.ProgressPercentage);
+            Form_Loading.Singleton.SetProgressPercentage(e.ProgressPercentage);
             Image image = e.UserState as Image;
             listView_main.AddImageItem(image);
         }
         public void EndLoadImage(RunWorkerCompletedEventArgs e)
         {
-            _loadingForm.Close();
+            Form_Loading.Singleton.Close();
             listView_main.Focus();
         }
 

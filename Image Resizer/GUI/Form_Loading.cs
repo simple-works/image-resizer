@@ -33,6 +33,13 @@ namespace ImageResizer
             InitializeComponent();
         }
 
+        public DialogResult ShowDialog(string title, Action cancelProgress)
+        {
+            Title = title;
+            CancelProgress = cancelProgress;
+            return ShowDialog();
+        }
+
         public void SetProgressPercentage(int percentage)
         {
             if (percentage >= progressBar_main.Minimum &&

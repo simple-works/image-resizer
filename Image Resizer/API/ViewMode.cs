@@ -4,11 +4,9 @@ namespace ImageResizer
 {
     public static partial class API
     {
-        public static ViewMode[] ViewModes { get; set; }
-
-        static API()
+        public static ViewMode[] GetViewModes()
         {
-            ViewModes = new[]
+            return new[]
             {
                 new ViewMode("Medium Icons", ViewX.MediumIcon, new Size(64, 64)),
                 new ViewMode("Details", ViewX.Details, new Size(32, 32)),

@@ -10,7 +10,6 @@ namespace ImageResizer
     partial class Form_Resize
     {
         private Image[] _inputImages;
-        private Form_Loading _loadingForm = Form_Loading.Singleton;
 
         public void InitializeAttributes(Image[] images)
         {
@@ -101,15 +100,16 @@ namespace ImageResizer
             if (!backgroundWorker_main.IsBusy)
             {
                 backgroundWorker_main.RunWorkerAsync();
-                _loadingForm.Title = "Resizing and saving images...";
-                _loadingForm.CancelProgress = () =>
-                {
-                    if (backgroundWorker_main.WorkerSupportsCancellation)
+                Form_Loading.Singleton.ShowDialog(
+                    title: "Resizing and saving images...",
+                    cancelProgress: () =>
                     {
-                        backgroundWorker_main.CancelAsync();
+                        if (backgroundWorker_main.WorkerSupportsCancellation)
+                        {
+                            backgroundWorker_main.CancelAsync();
+                        }
                     }
-                };
-                _loadingForm.ShowDialog();
+                );
             }
         }
 
@@ -118,6 +118,8 @@ namespace ImageResizer
             int width = 0;
             int height = 0;
             API.ResizeUnit unit = 0;
+            bool overwrite = false;
+
             if (radioButton_flat.Checked)
             {
                 width = (int)numUD_width.Value;
@@ -145,30 +147,50 @@ namespace ImageResizer
                     string folderPath = textBox_outputFolderPath.Text;
                     string fullPath = Path.Combine(folderPath, fileName);
 
-                    if (File.Exists(fullPath))
+                    if (File.Exists(fullPath) && !overwrite)
                     {
-                        var dialogResult = MessageBox.Show(
-                            String.Format("This file already exists:\n{0}\nOverwrite it ?", fullPath),
-                            "File Already Exists", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                        var dialogResult = Form_Overwrite.Show(
+                            String.Format("This file already exists:\n{0}\n\nOverwrite it ?", fullPath),
+                            "File Already Exists");
                         if (dialogResult == DialogResult.Yes)
                         {
                             outputImage.Save(fullPath);
+                            backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
+                            continue;
                         }
-                        backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
-                        continue;
+                        else if (dialogResult == DialogResult.OK) // YesToAll
+                        {
+                            outputImage.Save(fullPath);
+                            backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
+                            overwrite = true;
+                            continue;
+                        }
+                        else if (dialogResult == DialogResult.No)
+                        {
+                            backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
+                            continue;
+                        }
+                        else
+                        {
+                            backgroundWorker_main.ReportProgressAsPercentage(_inputImages.Length, _inputImages.Length);
+                            break;
+                        }
                     }
-                    outputImage.Save(fullPath);
-                    backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
+                    else
+                    {
+                        outputImage.Save(fullPath);
+                        backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
+                    }
                 }
             }
         }
         public void ProgressResizeAndSaveImages(ProgressChangedEventArgs e)
         {
-            _loadingForm.SetProgressPercentage(e.ProgressPercentage);
+            Form_Loading.Singleton.SetProgressPercentage(e.ProgressPercentage);
         }
         public void EndResizeAndSaveImages(RunWorkerCompletedEventArgs e)
         {
-            _loadingForm.Close();
+            Form_Loading.Singleton.Close();
             Close();
         }
     }

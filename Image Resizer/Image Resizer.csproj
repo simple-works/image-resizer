@@ -54,46 +54,55 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\API.cs" />
-    <Compile Include="API\Controls_Extensions\Control_Extension.cs" />
+    <Compile Include="API\Extensions\Controls_Extensions\Control_Extension.cs" />
     <Compile Include="API\Extensions\EventArgs_Extensions.cs" />
     <Compile Include="API\ViewMode.cs" />
-    <Compile Include="API\Controls_Extensions\BackgroundWorker_Extension.cs" />
-    <Compile Include="API\Controls_Extensions\ComboBox_Extension.cs" />
-    <Compile Include="API\Controls_Extensions\ImageList_Extension.cs" />
+    <Compile Include="API\Extensions\Controls_Extensions\BackgroundWorker_Extension.cs" />
+    <Compile Include="API\Extensions\Controls_Extensions\ComboBox_Extension.cs" />
+    <Compile Include="API\Extensions\Controls_Extensions\ImageList_Extension.cs" />
     <Compile Include="API\Extensions\Size_Extension.cs" />
     <Compile Include="API\Extensions\String_Extension.cs" />
-    <Compile Include="Other\Form_Loading.cs">
+    <Compile Include="GUI\Form_Loading.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Other\Form_Loading.Designer.cs">
+    <Compile Include="GUI\Form_Loading.Designer.cs">
       <DependentUpon>Form_Loading.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Main.cs">
+    <Compile Include="GUI\Form_Overwrite.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Resize\Form_Resize.cs">
+    <Compile Include="GUI\Form_Overwrite.Designer.cs">
+      <DependentUpon>Form_Overwrite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Main\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Resize\Form_Resize.Designer.cs">
+    <Compile Include="GUI\Resize\Form_Resize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Resize\Form_Resize.Designer.cs">
       <DependentUpon>Form_Resize.cs</DependentUpon>
     </Compile>
-    <Compile Include="Other\Form_About.cs">
+    <Compile Include="GUI\Form_About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Other\Form_About.Designer.cs">
+    <Compile Include="GUI\Form_About.Designer.cs">
       <DependentUpon>Form_About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Form_Main.cs">
+    <Compile Include="GUI\Main\Form_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Form_Main.Designer.cs">
+    <Compile Include="GUI\Main\Form_Main.Designer.cs">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Other\Form_View.cs">
+    <Compile Include="GUI\Form_View.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Other\Form_View.Designer.cs">
+    <Compile Include="GUI\Form_View.Designer.cs">
       <DependentUpon>Form_View.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Resize\Resize.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\UISettings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -101,27 +110,27 @@
       <DependentUpon>UISettings.settings</DependentUpon>
     </Compile>
     <Compile Include="API\Extensions\Image_Extension.cs" />
-    <Compile Include="API\Controls_Extensions\ListView_Extension.cs" />
+    <Compile Include="API\Extensions\Controls_Extensions\ListView_Extension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="API\Extensions\Int_Extension.cs" />
-    <Compile Include="Resize\Resize.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Other\Form_Loading.resx">
+    <EmbeddedResource Include="GUI\Form_Loading.resx">
       <DependentUpon>Form_Loading.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resize\Form_Resize.resx">
+    <EmbeddedResource Include="GUI\Form_Overwrite.resx">
+      <DependentUpon>Form_Overwrite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Resize\Form_Resize.resx">
       <DependentUpon>Form_Resize.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Other\Form_About.resx">
+    <EmbeddedResource Include="GUI\Form_About.resx">
       <DependentUpon>Form_About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\Form_Main.resx">
+    <EmbeddedResource Include="GUI\Main\Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Other\Form_View.resx">
+    <EmbeddedResource Include="GUI\Form_View.resx">
       <DependentUpon>Form_View.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
