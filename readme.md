@@ -2,7 +2,7 @@
 
 [![Plarform Windows](https://img.shields.io/badge/Windows-blue?logo=windows)](https://github.com/topics/windows)
 [![C# 4.0](https://img.shields.io/badge/C%23-4.0-blue?logo=c-sharp)](https://github.com/topics/csharp)
-[![.NET Framework 4.0](https://img.shields.io/badge/.NET%20Framework-4.0-blue?logo=.net)](https://github.com/topics/dotnet)
+[![.NET Framework 4.0](https://img.shields.io/badge/.NET%20Framework-4.0-blue?logo=dot-net)](https://github.com/topics/dotnet)
 
 Simple Lightweight Straightforward Batch Image Resizer for Windows.
 
