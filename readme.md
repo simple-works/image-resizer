@@ -6,7 +6,8 @@
 
 Simple Lightweight Straightforward Batch Image Resizer for Windows.
 
-**:floppy_disk: [Download Latest Release](https://github.com/Ambratolm/image-resizer/releases/latest "Go to Releases Section")**
+**:floppy_disk: [Download Latest Release](./Installer/Release/ImageResizer_Installer.zip?raw=true "Download")**
+<!-- **:floppy_disk: [Download Latest Release](https://github.com/Ambratolm/image-resizer/releases/latest "Go to Releases Section")** -->
 
 ![screenshot](./screenshot.gif?raw=true "Image Resizer")
 
