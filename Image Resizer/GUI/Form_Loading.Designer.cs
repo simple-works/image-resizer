@@ -33,6 +33,7 @@
             this.label_progressPercentage = new System.Windows.Forms.Label();
             this.label_title = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.backgroundWorker_main = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,6 +84,14 @@
             this.panel1.Size = new System.Drawing.Size(276, 107);
             this.panel1.TabIndex = 4;
             // 
+            // backgroundWorker_main
+            // 
+            this.backgroundWorker_main.WorkerReportsProgress = true;
+            this.backgroundWorker_main.WorkerSupportsCancellation = true;
+            this.backgroundWorker_main.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_main_DoWork);
+            this.backgroundWorker_main.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_main_ProgressChanged);
+            this.backgroundWorker_main.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_main_RunWorkerCompleted);
+            // 
             // Form_Loading
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -97,6 +106,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Loading_FormClosing);
+            this.Load += new System.EventHandler(this.Form_Loading_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -109,5 +119,6 @@
         private System.Windows.Forms.Label label_progressPercentage;
         private System.Windows.Forms.Label label_title;
         private System.Windows.Forms.Panel panel1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_main;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -97,101 +96,85 @@ namespace ImageResizer
 
         public void ResizeAndSaveImagesAsync()
         {
-            if (!backgroundWorker_main.IsBusy)
-            {
-                backgroundWorker_main.RunWorkerAsync();
-                Form_Loading.Singleton.ShowDialog(
-                    title: "Resizing and saving images...",
-                    cancelProgress: () =>
-                    {
-                        if (backgroundWorker_main.WorkerSupportsCancellation)
-                        {
-                            backgroundWorker_main.CancelAsync();
-                        }
-                    }
-                );
-            }
-        }
-
-        public void BeginResizeAndSaveImages(DoWorkEventArgs e)
-        {
-            int width = 0;
-            int height = 0;
-            API.ResizeUnit unit = 0;
-            bool overwrite = false;
-
-            if (radioButton_flat.Checked)
-            {
-                width = (int)numUD_width.Value;
-                height = (int)numUD_height.Value;
-                unit = API.ResizeUnit.Flat;
-            }
-            else
-            {
-                width = (int)numUD_widthPc.Value;
-                height = (int)numUD_heightPc.Value;
-                unit = API.ResizeUnit.Percentage;
-            }
-
-            for (int i = 0; i < _inputImages.Length; i++)
-            {
-                if (backgroundWorker_main.CancellationPending)
+            Form_Loading.Show(
+                title: "Resizing and saving images...",
+                start: (worker, e) =>
                 {
-                    e.Cancel = true;
-                    break;
-                }
-                else
-                {
-                    Image outputImage = _inputImages[i].Resize(width, height, unit);
-                    string fileName = outputImage.GetOutputFileName();
-                    string folderPath = textBox_outputFolderPath.Text;
-                    string fullPath = Path.Combine(folderPath, fileName);
+                    int width = 0;
+                    int height = 0;
+                    API.ResizeUnit unit = 0;
+                    bool overwriteAll = false;
 
-                    if (File.Exists(fullPath) && !overwrite)
+                    if (radioButton_flat.Checked)
                     {
-                        var dialogResult = Form_Overwrite.Show(
-                            String.Format("This file already exists:\n{0}\n\nOverwrite it ?", fullPath),
-                            "File Already Exists");
-                        if (dialogResult == DialogResult.Yes)
-                        {
-                            outputImage.Save(fullPath);
-                            backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
-                            continue;
-                        }
-                        else if (dialogResult == DialogResult.OK) // YesToAll
-                        {
-                            outputImage.Save(fullPath);
-                            backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
-                            overwrite = true;
-                            continue;
-                        }
-                        else if (dialogResult == DialogResult.No)
-                        {
-                            backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
-                            continue;
-                        }
-                        else
-                        {
-                            backgroundWorker_main.ReportProgressAsPercentage(_inputImages.Length, _inputImages.Length);
-                            break;
-                        }
+                        width = (int)numUD_width.Value;
+                        height = (int)numUD_height.Value;
+                        unit = API.ResizeUnit.Flat;
                     }
                     else
                     {
-                        outputImage.Save(fullPath);
-                        backgroundWorker_main.ReportProgressAsPercentage(i + 1, _inputImages.Length);
+                        width = (int)numUD_widthPc.Value;
+                        height = (int)numUD_heightPc.Value;
+                        unit = API.ResizeUnit.Percentage;
                     }
+
+                    for (int i = 0; i < _inputImages.Length; i++)
+                    {
+                        if (worker.CancellationPending)
+                        {
+                            e.Cancel = true;
+                            break;
+                        }
+                        else
+                        {
+                            Image outputImage = _inputImages[i].Resize(width, height, unit);
+                            string fileName = outputImage.GetOutputFileName();
+                            string folderPath = textBox_outputFolderPath.Text;
+                            string fullPath = Path.Combine(folderPath, fileName);
+
+                            Action save = () => outputImage.Save(fullPath);
+                            Action reportProgress = () => worker.ReportProgress((i + 1).ToPercentage(_inputImages.Length));
+
+                            if (File.Exists(fullPath) && !overwriteAll)
+                            {
+                                var dialogResult = Form_Overwrite.Show(
+                                    String.Format("This file already exists:\n{0}\n\nOverwrite it ?", fullPath),
+                                    "File Already Exists");
+                                if (dialogResult == DialogResult.Yes)
+                                {
+                                    save();
+                                    reportProgress();
+                                }
+                                else if (dialogResult == DialogResult.OK) // YesToAll
+                                {
+                                    save();
+                                    reportProgress();
+                                    overwriteAll = true;
+                                }
+                                else if (dialogResult == DialogResult.No)
+                                {
+                                    reportProgress();
+                                }
+                                else if (dialogResult == DialogResult.Cancel)
+                                {
+                                    reportProgress();
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                save();
+                                reportProgress();
+                            }
+                        }
+                    }
+                },
+                complete: (worker, e) =>
+                {
+                    Close();
                 }
-            }
-        }
-        public void ProgressResizeAndSaveImages(ProgressChangedEventArgs e)
-        {
-            Form_Loading.Singleton.SetProgressPercentage(e.ProgressPercentage);
-        }
-        public void EndResizeAndSaveImages(RunWorkerCompletedEventArgs e)
-        {
-            Form_Loading.Singleton.Close();
-            Close();
+            );
+
         }
     }
 }

@@ -19,6 +19,7 @@ namespace ImageResizer
                 {
                     imageList.Images.Add(key, srcImageList.Images[key]);
                 }
+                return;
             }
         }
     }

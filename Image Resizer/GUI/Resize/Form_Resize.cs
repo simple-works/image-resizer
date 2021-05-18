@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -74,21 +73,6 @@ namespace ImageResizer
         private void button_start_Click(object sender, EventArgs e)
         {
             ResizeAndSaveImagesAsync();
-        }
-
-        private void backgroundWorker_main_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BeginResizeAndSaveImages(e);
-        }
-
-        private void backgroundWorker_main_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressResizeAndSaveImages(e);
-        }
-
-        private void backgroundWorker_main_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            EndResizeAndSaveImages(e);
         }
     }
 }

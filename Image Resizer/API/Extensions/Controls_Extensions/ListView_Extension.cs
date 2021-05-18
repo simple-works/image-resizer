@@ -21,7 +21,7 @@ namespace ImageResizer
             {
                 listView.Tag = new ImageList();
                 ImageList bckImageList = listView.Tag as ImageList;
-                bckImageList.ImageSize = listView.LargeImageList.ImageSize;
+                bckImageList.ImageSize = new Size(256, 256);
                 bckImageList.ColorDepth = listView.LargeImageList.ColorDepth;
                 return bckImageList;
             }

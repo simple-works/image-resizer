@@ -1,22 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace ImageResizer
 {
     public partial class Form_Loading : Form
     {
-        private static Form_Loading s_singleton;
-        public static Form_Loading Singleton
-        {
-            get
-            {
-                if (s_singleton == null || s_singleton.IsDisposed)
-                {
-                    s_singleton = new Form_Loading();
-                }
-                return s_singleton;
-            }
-        }
         public string Title
         {
             get { return label_title.Text; }
@@ -26,18 +15,32 @@ namespace ImageResizer
         {
             get { return progressBar_main.Value; }
         }
-        public Action CancelProgress;
+        public delegate void StartCallback(BackgroundWorker w, DoWorkEventArgs e);
+        public delegate void ProgressCallback(BackgroundWorker w, ProgressChangedEventArgs e);
+        public delegate void CompleteCallback(BackgroundWorker w, RunWorkerCompletedEventArgs e);
+        public StartCallback Start;
+        public ProgressCallback Progress;
+        public CompleteCallback Complete;
+        public Action Cancel;
 
         public Form_Loading()
         {
             InitializeComponent();
         }
 
-        public DialogResult ShowDialog(string title, Action cancelProgress)
+        public static DialogResult Show(string title = "",
+            StartCallback start = null,
+            ProgressCallback progress = null,
+            CompleteCallback complete = null,
+            Action cancel = null)
         {
-            Title = title;
-            CancelProgress = cancelProgress;
-            return ShowDialog();
+            Form_Loading loadingForm = new Form_Loading();
+            loadingForm.Title = String.IsNullOrEmpty(title) ? loadingForm.Title : title;
+            loadingForm.Start = start;
+            loadingForm.Progress = progress;
+            loadingForm.Complete = complete;
+            loadingForm.Cancel = cancel;
+            return loadingForm.ShowDialog();
         }
 
         public void SetProgressPercentage(int percentage)
@@ -50,14 +53,55 @@ namespace ImageResizer
             }
         }
 
-        private void button_cancel_Click(object sender, EventArgs e)
+        private void Form_Loading_Load(object sender, EventArgs e)
         {
-            Close();
+            if (!backgroundWorker_main.IsBusy)
+            {
+                backgroundWorker_main.RunWorkerAsync();
+            }
+        }
+
+        private void backgroundWorker_main_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (Start != null)
+            {
+                Start(sender as BackgroundWorker, e);
+            }
+        }
+
+        private void backgroundWorker_main_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (Progress != null)
+            {
+                Progress(sender as BackgroundWorker, e);
+            }
+            SetProgressPercentage(e.ProgressPercentage);
+        }
+
+        private void backgroundWorker_main_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (Complete != null)
+            {
+                Complete(sender as BackgroundWorker, e);
+            }
+            this.Close();
         }
 
         private void Form_Loading_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CancelProgress();
+            if (backgroundWorker_main.WorkerSupportsCancellation)
+            {
+                if (Cancel != null)
+                {
+                    Cancel();
+                }
+                backgroundWorker_main.CancelAsync();
+            }
+        }
+
+        private void button_cancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

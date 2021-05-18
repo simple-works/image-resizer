@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -108,51 +107,39 @@ namespace ImageResizer
 
         public void LoadImagesAsync(string[] filePaths)
         {
-            if (!backgroundWorker_main.IsBusy)
-            {
-                backgroundWorker_main.RunWorkerAsync(filePaths);
-                Form_Loading.Singleton.ShowDialog(
-                    title: "Opening image files...",
-                    cancelProgress: () =>
+            Form_Loading.Show(
+                title: "Opening image files...",
+                start: (worker, e) =>
+                {
+                    for (int i = 0; i < filePaths.Length; i++)
                     {
-                        if (backgroundWorker_main.WorkerSupportsCancellation)
+                        if (worker.CancellationPending)
                         {
-                            backgroundWorker_main.CancelAsync();
+                            e.Cancel = true;
+                            break;
+                        }
+                        else
+                        {
+                            Image image = filePaths[i].LoadImage();
+                            _inputImages.Add(image);
+                            worker.ReportProgress(
+                                percentProgress: (i + 1).ToPercentage(filePaths.Length),
+                                userState: image
+                            );
                         }
                     }
-                );
-            }
-        }
-
-        public void BeginLoadImage(DoWorkEventArgs e)
-        {
-            string[] filePaths = e.Argument as string[];
-            for (int i = 0; i < filePaths.Length; i++)
-            {
-                if (backgroundWorker_main.CancellationPending)
+                },
+                progress: (worker, e) =>
                 {
-                    e.Cancel = true;
-                    break;
-                }
-                else
+                    Image image = e.UserState as Image;
+                    listView_main.AddImageItem(image);
+                    UpdateControls();
+                },
+                complete: (worker, e) =>
                 {
-                    Image image = filePaths[i].LoadImage();
-                    _inputImages.Add(image);
-                    backgroundWorker_main.ReportProgressAsPercentage(i + 1,
-                        filePaths.Length, image);
+                    listView_main.Focus();
                 }
-            }
-        }
-        public void ProgressLoadImage(ProgressChangedEventArgs e)
-        {
-            Form_Loading.Singleton.SetProgressPercentage(e.ProgressPercentage);
-            Image image = e.UserState as Image;
-            listView_main.AddImageItem(image);
-        }
-        public void EndLoadImage(RunWorkerCompletedEventArgs e)
-        {
-            Form_Loading.Singleton.Close();
-            listView_main.Focus();
+            );
         }
 
         public void ShowAboutDialog()

@@ -4,9 +4,9 @@
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
 "ProjectName" = "8:Installer"
-"LanguageId" = "3:1033"
+"LanguageId" = "3:0"
 "CodePage" = "3:1252"
-"UILanguageId" = "3:1033"
+"UILanguageId" = "3:0"
 "SccProjectName" = "8:"
 "SccLocalPath" = "8:"
 "SccAuxPath" = "8:"
@@ -68,6 +68,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -235,7 +248,7 @@
         }
         "MsiBootstrapper"
         {
-        "LangId" = "3:1033"
+        "LangId" = "3:0"
         "RequiresElevation" = "11:FALSE"
         }
         "Product"
@@ -243,8 +256,8 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Image Resizer"
         "ProductCode" = "8:{BD90F131-58DC-48CE-A564-FE6F05C72612}"
-        "PackageCode" = "8:{BDB6B8C9-10E4-4B44-8653-6FA9A42CA0F5}"
-        "UpgradeCode" = "8:{9B4F2EBE-61C8-4C9C-AA1B-044366EE8DA6}"
+        "PackageCode" = "8:{CF4D5B36-C2F1-4F41-8EF3-4C508296E2AF}"
+        "UpgradeCode" = "8:{267EA697-191D-4157-9892-7CC075E7757C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -253,7 +266,7 @@
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:Ambratolm"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
+        "ARPHELPLINK" = "8:https://www.ambratolm.cf/p/contact.html"
         "Title" = "8:Image Resizer Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Ambratolm"

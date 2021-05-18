@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace ImageResizer
@@ -74,24 +73,6 @@ namespace ImageResizer
         private void listView_main_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ViewSelectedItem();
-        }
-
-        private void backgroundWorker_main_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BeginLoadImage(e);
-        }
-
-        private void backgroundWorker_main_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressLoadImage(e);
-            UpdateControls();
-
-        }
-
-        private void backgroundWorker_main_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            EndLoadImage(e);
-            UpdateControls();
         }
     }
 }

@@ -53,7 +53,6 @@
             this.button_selectOutputFolder = new System.Windows.Forms.Button();
             this.toolTip_main = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog_main = new System.Windows.Forms.FolderBrowserDialog();
-            this.backgroundWorker_main = new System.ComponentModel.BackgroundWorker();
             this.groupBox_percentage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUD_heightPc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUD_widthPc)).BeginInit();
@@ -320,14 +319,6 @@
             this.button_selectOutputFolder.UseVisualStyleBackColor = true;
             this.button_selectOutputFolder.Click += new System.EventHandler(this.button_selectOutputFolder_Click);
             // 
-            // backgroundWorker_main
-            // 
-            this.backgroundWorker_main.WorkerReportsProgress = true;
-            this.backgroundWorker_main.WorkerSupportsCancellation = true;
-            this.backgroundWorker_main.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_main_DoWork);
-            this.backgroundWorker_main.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_main_ProgressChanged);
-            this.backgroundWorker_main.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_main_RunWorkerCompleted);
-            // 
             // Form_Resize
             // 
             this.AcceptButton = this.button_start;
@@ -393,6 +384,5 @@
         private System.Windows.Forms.Button button_cancel;
         private System.Windows.Forms.ToolTip toolTip_main;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog_main;
-        private System.ComponentModel.BackgroundWorker backgroundWorker_main;
     }
 }
